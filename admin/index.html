@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tap Tap Admin</title>
+	<style>
+		:root {
+			color: #eef2ff;
+			background: #08090f;
+			font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+		}
+		* { box-sizing: border-box; }
+		body {
+			margin: 0;
+			min-height: 100vh;
+			background:
+				radial-gradient(circle at 80% 0%, #3867ff55, transparent 32rem),
+				radial-gradient(circle at 0% 95%, #3ef3ff33, transparent 28rem),
+				#08090f;
+		}
+		main {
+			width: min(100%, 960px);
+			margin: 0 auto;
+			padding: 40px 18px 64px;
+		}
+		header {
+			display: flex;
+			justify-content: space-between;
+			gap: 18px;
+			align-items: end;
+			margin-bottom: 24px;
+		}
+		h1 {
+			margin: 0;
+			font-size: clamp(2rem, 5vw, 4rem);
+			line-height: .92;
+			letter-spacing: 0;
+		}
+		p {
+			margin: 8px 0 0;
+			color: #98a2b3;
+		}
+		.panel {
+			background: #11131dcc;
+			border: 1px solid #ffffff14;
+			border-radius: 18px;
+			box-shadow: 0 24px 80px #00000055;
+			padding: 22px;
+		}
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 16px;
+		}
+		label {
+			display: grid;
+			gap: 7px;
+			color: #cbd5e1;
+			font-size: .82rem;
+			font-weight: 800;
+			letter-spacing: .04em;
+			text-transform: uppercase;
+		}
+		input, textarea {
+			width: 100%;
+			border: 1px solid #ffffff1f;
+			border-radius: 12px;
+			background: #08090f;
+			color: #f8fafc;
+			font: inherit;
+			padding: 13px 14px;
+			outline: none;
+		}
+		textarea {
+			min-height: 120px;
+			resize: vertical;
+		}
+		input:focus, textarea:focus {
+			border-color: #63e6ff;
+			box-shadow: 0 0 0 3px #63e6ff22;
+		}
+		.full { grid-column: 1 / -1; }
+		.switches {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 12px;
+		}
+		.switch {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 14px;
+			padding: 14px;
+			border: 1px solid #ffffff14;
+			border-radius: 14px;
+			background: #ffffff08;
+			text-transform: none;
+			letter-spacing: 0;
+		}
+		.switch input {
+			width: 22px;
+			height: 22px;
+			accent-color: #b8f24a;
+		}
+		.actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			margin-top: 18px;
+		}
+		button {
+			border: 0;
+			border-radius: 14px;
+			padding: 13px 18px;
+			background: #b8f24a;
+			color: #050607;
+			font: inherit;
+			font-weight: 900;
+			cursor: pointer;
+		}
+		button.secondary {
+			background: #ffffff12;
+			color: #f8fafc;
+			border: 1px solid #ffffff1f;
+		}
+		button:disabled {
+			opacity: .5;
+			cursor: wait;
+		}
+		.status {
+			margin-top: 18px;
+			min-height: 24px;
+			color: #98a2b3;
+			font-weight: 700;
+		}
+		.status.error { color: #ff8c8c; }
+		.status.success { color: #b8f24a; }
+		pre {
+			white-space: pre-wrap;
+			word-break: break-word;
+			margin: 18px 0 0;
+			padding: 14px;
+			border-radius: 14px;
+			background: #050607;
+			border: 1px solid #ffffff12;
+			color: #cbd5e1;
+		}
+		@media (max-width: 720px) {
+			header, .grid, .switches { grid-template-columns: 1fr; display: grid; }
+			header { align-items: start; }
+		}
+	</style>
+</head>
+<body>
+	<main>
+		<header>
+			<div>
+				<h1>Tap Tap Admin</h1>
+				<p>Force update settings for the mobile app.</p>
+			</div>
+		</header>
+
+		<section class="panel" aria-label="Force update settings">
+			<div class="grid">
+				<label>
+					Backend URL
+					<input id="backendUrl" autocomplete="url" value="https://tapntap-1.onrender.com">
+				</label>
+				<label>
+					Username
+					<input id="username" autocomplete="username" value="sonu">
+				</label>
+				<label>
+					Password
+					<input id="password" type="password" autocomplete="current-password">
+				</label>
+				<label>
+					Min supported version
+					<input id="minSupportedVersion" placeholder="1.0.0">
+				</label>
+				<label>
+					Latest version
+					<input id="latestVersion" placeholder="1.0.0">
+				</label>
+				<label class="full">
+					Update URL
+					<input id="updateUrl" autocomplete="url" placeholder="https://apps.apple.com/... or https://play.google.com/...">
+				</label>
+				<div class="switches full">
+					<label class="switch">
+						<span>Enable notification</span>
+						<input id="enabled" type="checkbox">
+					</label>
+					<label class="switch">
+						<span>Force/block old app</span>
+						<input id="force" type="checkbox">
+					</label>
+				</div>
+				<label class="full">
+					Title
+					<input id="title" maxlength="80" placeholder="Update required">
+				</label>
+				<label class="full">
+					Message
+					<textarea id="message" maxlength="500" placeholder="Please update Tap Tap to continue playing."></textarea>
+				</label>
+			</div>
+
+			<div class="actions">
+				<button id="loadButton" class="secondary" type="button">Load current</button>
+				<button id="saveButton" type="button">Save settings</button>
+			</div>
+			<div id="status" class="status" role="status" aria-live="polite"></div>
+			<pre id="preview" hidden></pre>
+		</section>
+	</main>
+
+	<script>
+		const fields = {
+			backendUrl: document.querySelector('#backendUrl'),
+			username: document.querySelector('#username'),
+			password: document.querySelector('#password'),
+			enabled: document.querySelector('#enabled'),
+			force: document.querySelector('#force'),
+			minSupportedVersion: document.querySelector('#minSupportedVersion'),
+			latestVersion: document.querySelector('#latestVersion'),
+			title: document.querySelector('#title'),
+			message: document.querySelector('#message'),
+			updateUrl: document.querySelector('#updateUrl'),
+		};
+		const status = document.querySelector('#status');
+		const preview = document.querySelector('#preview');
+		const buttons = [document.querySelector('#loadButton'), document.querySelector('#saveButton')];
+
+		function setStatus(message, kind = '') {
+			status.textContent = message;
+			status.className = `status ${kind}`;
+		}
+
+		function setBusy(busy) {
+			buttons.forEach((button) => { button.disabled = busy; });
+		}
+
+		function baseUrl() {
+			return fields.backendUrl.value.trim().replace(/\/+$/, '');
+		}
+
+		function authHeader() {
+			return `Basic ${btoa(`${fields.username.value}:${fields.password.value}`)}`;
+		}
+
+		function payloadFromForm() {
+			return {
+				enabled: fields.enabled.checked,
+				force: fields.force.checked,
+				minSupportedVersion: fields.minSupportedVersion.value.trim(),
+				latestVersion: fields.latestVersion.value.trim(),
+				title: fields.title.value.trim(),
+				message: fields.message.value.trim(),
+				updateUrl: fields.updateUrl.value.trim(),
+			};
+		}
+
+		function fillForm(data) {
+			fields.enabled.checked = Boolean(data.enabled);
+			fields.force.checked = Boolean(data.force);
+			fields.minSupportedVersion.value = data.minSupportedVersion ?? '';
+			fields.latestVersion.value = data.latestVersion ?? '';
+			fields.title.value = data.title ?? '';
+			fields.message.value = data.message ?? '';
+			fields.updateUrl.value = data.updateUrl ?? '';
+			preview.hidden = false;
+			preview.textContent = JSON.stringify(data, null, 2);
+		}
+
+		async function request(path, options = {}) {
+			const response = await fetch(`${baseUrl()}${path}`, {
+				...options,
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: authHeader(),
+					...(options.headers ?? {}),
+				},
+			});
+			const body = await response.json().catch(() => ({}));
+			if (!response.ok) {
+				throw new Error(body.error?.message ?? `Request failed (${response.status})`);
+			}
+			return body.data;
+		}
+
+		async function loadCurrent() {
+			setBusy(true);
+			setStatus('Loading current settings...');
+			try {
+				const data = await request('/api/v1/admin/app-update');
+				fillForm(data);
+				setStatus('Loaded current settings.', 'success');
+			} catch (error) {
+				setStatus(error.message, 'error');
+			} finally {
+				setBusy(false);
+			}
+		}
+
+		async function saveCurrent() {
+			setBusy(true);
+			setStatus('Saving settings...');
+			try {
+				const data = await request('/api/v1/admin/app-update', {
+					method: 'PUT',
+					body: JSON.stringify(payloadFromForm()),
+				});
+				fillForm(data);
+				setStatus('Saved force update settings.', 'success');
+			} catch (error) {
+				setStatus(error.message, 'error');
+			} finally {
+				setBusy(false);
+			}
+		}
+
+		document.querySelector('#loadButton').addEventListener('click', loadCurrent);
+		document.querySelector('#saveButton').addEventListener('click', saveCurrent);
+	</script>
+</body>
+</html>
