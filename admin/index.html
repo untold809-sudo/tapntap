@@ -3,326 +3,263 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Tap Tap Admin</title>
+	<meta name="robots" content="noindex, nofollow">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https: http://127.0.0.1:* http://localhost:*; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+	<title>TapTap Admin</title>
 	<style>
-		:root {
-			color: #eef2ff;
-			background: #08090f;
-			font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-		}
+		:root { color: #eef2ff; background: #08090f; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
 		* { box-sizing: border-box; }
-		body {
-			margin: 0;
-			min-height: 100vh;
-			background:
-				radial-gradient(circle at 80% 0%, #3867ff55, transparent 32rem),
-				radial-gradient(circle at 0% 95%, #3ef3ff33, transparent 28rem),
-				#08090f;
-		}
-		main {
-			width: min(100%, 960px);
-			margin: 0 auto;
-			padding: 40px 18px 64px;
-		}
-		header {
-			display: flex;
-			justify-content: space-between;
-			gap: 18px;
-			align-items: end;
-			margin-bottom: 24px;
-		}
-		h1 {
-			margin: 0;
-			font-size: clamp(2rem, 5vw, 4rem);
-			line-height: .92;
-			letter-spacing: 0;
-		}
-		p {
-			margin: 8px 0 0;
-			color: #98a2b3;
-		}
-		.panel {
-			background: #11131dcc;
-			border: 1px solid #ffffff14;
-			border-radius: 18px;
-			box-shadow: 0 24px 80px #00000055;
-			padding: 22px;
-		}
-		.grid {
-			display: grid;
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-			gap: 16px;
-		}
-		label {
-			display: grid;
-			gap: 7px;
-			color: #cbd5e1;
-			font-size: .82rem;
-			font-weight: 800;
-			letter-spacing: .04em;
-			text-transform: uppercase;
-		}
-		input, textarea {
-			width: 100%;
-			border: 1px solid #ffffff1f;
-			border-radius: 12px;
-			background: #08090f;
-			color: #f8fafc;
-			font: inherit;
-			padding: 13px 14px;
-			outline: none;
-		}
-		textarea {
-			min-height: 120px;
-			resize: vertical;
-		}
-		input:focus, textarea:focus {
-			border-color: #63e6ff;
-			box-shadow: 0 0 0 3px #63e6ff22;
-		}
+		body { margin: 0; min-height: 100vh; background: radial-gradient(circle at 80% 0%, #3867ff55, transparent 32rem), radial-gradient(circle at 0% 95%, #3ef3ff33, transparent 28rem), #08090f; }
+		main { width: min(100%, 960px); margin: 0 auto; padding: 32px 16px 64px; }
+		header { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+		h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1; }
+		h2 { margin: 0 0 4px; font-size: 1.2rem; }
+		p, .muted { margin: 6px 0 0; color: #98a2b3; }
+		.panel { background: #11131dcc; border: 1px solid #ffffff14; border-radius: 18px; box-shadow: 0 24px 80px #00000055; padding: 22px; margin-bottom: 18px; }
+		.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 14px; }
+		label { display: grid; gap: 7px; color: #cbd5e1; font-size: .8rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+		input, textarea { width: 100%; border: 1px solid #ffffff1f; border-radius: 12px; background: #08090f; color: #f8fafc; font: inherit; padding: 12px 14px; outline: none; }
+		textarea { min-height: 220px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; }
+		input:focus, textarea:focus { border-color: #63e6ff; box-shadow: 0 0 0 3px #63e6ff22; }
 		.full { grid-column: 1 / -1; }
-		.switches {
-			display: grid;
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-			gap: 12px;
-		}
-		.switch {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			gap: 14px;
-			padding: 14px;
-			border: 1px solid #ffffff14;
-			border-radius: 14px;
-			background: #ffffff08;
-			text-transform: none;
-			letter-spacing: 0;
-		}
-		.switch input {
-			width: 22px;
-			height: 22px;
-			accent-color: #b8f24a;
-		}
-		.actions {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 10px;
-			margin-top: 18px;
-		}
-		button {
-			border: 0;
-			border-radius: 14px;
-			padding: 13px 18px;
-			background: #b8f24a;
-			color: #050607;
-			font: inherit;
-			font-weight: 900;
-			cursor: pointer;
-		}
-		button.secondary {
-			background: #ffffff12;
-			color: #f8fafc;
-			border: 1px solid #ffffff1f;
-		}
-		button:disabled {
-			opacity: .5;
-			cursor: wait;
-		}
-		.status {
-			margin-top: 18px;
-			min-height: 24px;
-			color: #98a2b3;
-			font-weight: 700;
-		}
-		.status.error { color: #ff8c8c; }
-		.status.success { color: #b8f24a; }
-		pre {
-			white-space: pre-wrap;
-			word-break: break-word;
-			margin: 18px 0 0;
-			padding: 14px;
-			border-radius: 14px;
-			background: #050607;
-			border: 1px solid #ffffff12;
-			color: #cbd5e1;
-		}
-		@media (max-width: 720px) {
-			header, .grid, .switches { grid-template-columns: 1fr; display: grid; }
-			header { align-items: start; }
-		}
+		.switch { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px; border: 1px solid #ffffff14; border-radius: 14px; background: #ffffff08; text-transform: none; letter-spacing: 0; font-size: .95rem; }
+		.switch input { width: 22px; height: 22px; accent-color: #b8f24a; }
+		.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+		button { border: 0; border-radius: 14px; padding: 12px 18px; background: #b8f24a; color: #050607; font: inherit; font-weight: 900; cursor: pointer; }
+		button.secondary { background: #ffffff12; color: #f8fafc; border: 1px solid #ffffff1f; }
+		button.danger { background: #ff8c8c22; color: #ffb4b4; border: 1px solid #ff8c8c55; }
+		button:disabled { opacity: .5; cursor: wait; }
+		.tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+		.tabs button { background: #ffffff0d; color: #cbd5e1; border: 1px solid #ffffff14; }
+		.tabs button[aria-selected="true"] { background: #b8f24a; color: #050607; }
+		.status { margin-top: 14px; min-height: 22px; color: #98a2b3; font-weight: 700; }
+		.status.error { color: #ff8c8c; } .status.success { color: #b8f24a; }
+		.login { max-width: 420px; margin: 8vh auto 0; }
+		.pill { font-size: .8rem; color: #98a2b3; border: 1px solid #ffffff1f; border-radius: 999px; padding: 6px 12px; }
+		.hint { font-size: .85rem; color: #98a2b3; text-transform: none; letter-spacing: 0; font-weight: 500; }
+		[hidden] { display: none !important; }
+		@media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
 	</style>
 </head>
 <body>
-	<main>
+<main>
+	<!-- LOGIN -->
+	<section id="loginView" class="panel login" aria-label="Sign in">
+		<h1>TapTap Admin</h1>
+		<p>Sign in with the backend admin account.</p>
+		<form id="loginForm" class="grid" autocomplete="on">
+			<label class="full">Username<input id="username" autocomplete="username" required></label>
+			<label class="full">Password<input id="password" type="password" autocomplete="current-password" required></label>
+			<details class="full"><summary class="muted">Server</summary>
+				<label style="margin-top:10px">Backend URL<input id="backendUrl" autocomplete="url" value="https://tapntap-1.onrender.com"></label>
+			</details>
+			<div class="actions full"><button id="loginButton" type="submit">Sign in</button></div>
+		</form>
+		<div id="loginStatus" class="status" role="status" aria-live="polite"></div>
+	</section>
+
+	<!-- APP -->
+	<div id="appView" hidden>
 		<header>
-			<div>
-				<h1>Tap Tap Admin</h1>
-				<p>Force update settings for the mobile app.</p>
-			</div>
+			<div><h1>TapTap Admin</h1><p id="who"></p></div>
+			<div class="actions" style="margin:0"><span id="server" class="pill"></span><button id="logoutButton" class="danger" type="button">Sign out</button></div>
 		</header>
 
-		<section class="panel" aria-label="Force update settings">
+		<div class="tabs" role="tablist">
+			<button role="tab" aria-selected="true" data-tab="updateTab" type="button">Force update</button>
+			<button role="tab" aria-selected="false" data-tab="configTab" type="button">Remote config</button>
+		</div>
+
+		<!-- FORCE UPDATE -->
+		<section id="updateTab" class="panel" role="tabpanel" aria-label="Force update">
+			<h2>Force update</h2>
+			<p>Checked by the app on every launch. Old versions below the minimum are blocked when "Force" is on.</p>
 			<div class="grid">
-				<label>
-					Backend URL
-					<input id="backendUrl" autocomplete="url" value="https://tapntap-1.onrender.com">
-				</label>
-				<label>
-					Username
-					<input id="username" autocomplete="username" value="sonu">
-				</label>
-				<label>
-					Password
-					<input id="password" type="password" autocomplete="current-password">
-				</label>
-				<label>
-					Min supported version
-					<input id="minSupportedVersion" placeholder="1.0.0">
-				</label>
-				<label>
-					Latest version
-					<input id="latestVersion" placeholder="1.0.0">
-				</label>
-				<label class="full">
-					Update URL
-					<input id="updateUrl" autocomplete="url" placeholder="https://apps.apple.com/... or https://play.google.com/...">
-				</label>
-				<div class="switches full">
-					<label class="switch">
-						<span>Enable notification</span>
-						<input id="enabled" type="checkbox">
-					</label>
-					<label class="switch">
-						<span>Force/block old app</span>
-						<input id="force" type="checkbox">
-					</label>
-				</div>
-				<label class="full">
-					Title
-					<input id="title" maxlength="80" placeholder="Update required">
-				</label>
-				<label class="full">
-					Message
-					<textarea id="message" maxlength="500" placeholder="Please update Tap Tap to continue playing."></textarea>
-				</label>
+				<label>Min supported version<input id="minSupportedVersion" placeholder="1.0.0"></label>
+				<label>Latest version<input id="latestVersion" placeholder="1.0.0"></label>
+				<label class="switch"><span>Show update prompt</span><input id="enabled" type="checkbox"></label>
+				<label class="switch"><span>Force (block old app)</span><input id="force" type="checkbox"></label>
+				<label class="full">Update URL (fallback)<input id="updateUrl" placeholder="https://tapntap.com"></label>
+				<label>Android URL<input id="updateUrlAndroid" placeholder="https://play.google.com/store/apps/details?id=com.taptap.mobile"></label>
+				<label>iOS URL<input id="updateUrlIos" placeholder="https://apps.apple.com/app/..."></label>
+				<label class="full">Title<input id="title" maxlength="80" placeholder="Update required"></label>
+				<label class="full">Message<textarea id="message" maxlength="500" style="min-height:110px;font-family:inherit" placeholder="Please update TapTap to continue playing."></textarea></label>
 			</div>
-
 			<div class="actions">
-				<button id="loadButton" class="secondary" type="button">Load current</button>
-				<button id="saveButton" type="button">Save settings</button>
+				<button id="updateReload" class="secondary" type="button">Reload</button>
+				<button id="updateSave" type="button">Save force update</button>
 			</div>
-			<div id="status" class="status" role="status" aria-live="polite"></div>
-			<pre id="preview" hidden></pre>
+			<div id="updateStatus" class="status" role="status" aria-live="polite"></div>
 		</section>
-	</main>
 
-	<script>
-		const fields = {
-			backendUrl: document.querySelector('#backendUrl'),
-			username: document.querySelector('#username'),
-			password: document.querySelector('#password'),
-			enabled: document.querySelector('#enabled'),
-			force: document.querySelector('#force'),
-			minSupportedVersion: document.querySelector('#minSupportedVersion'),
-			latestVersion: document.querySelector('#latestVersion'),
-			title: document.querySelector('#title'),
-			message: document.querySelector('#message'),
-			updateUrl: document.querySelector('#updateUrl'),
+		<!-- REMOTE CONFIG -->
+		<section id="configTab" class="panel" role="tabpanel" aria-label="Remote config" hidden>
+			<h2>Remote config</h2>
+			<p>A JSON object the app downloads at most once per refresh interval and caches. Use simple keys: <code>true/false</code>, numbers, text.</p>
+			<div class="grid">
+				<label class="full">Values (JSON object)
+					<textarea id="configValues" spellcheck="false">{}</textarea>
+					<span class="hint">Example: {"showShop": false, "eventBanner": "Weekend x2 coins!"}</span>
+				</label>
+				<label>Refresh interval (days)<input id="configTtlDays" type="number" min="0.05" max="30" step="0.5" value="5"></label>
+				<label>Last saved<input id="configUpdatedAt" readonly></label>
+			</div>
+			<div class="actions">
+				<button id="configFormat" class="secondary" type="button">Format JSON</button>
+				<button id="configReload" class="secondary" type="button">Reload</button>
+				<button id="configSave" type="button">Save remote config</button>
+			</div>
+			<div id="configStatus" class="status" role="status" aria-live="polite"></div>
+		</section>
+	</div>
+</main>
+
+<script>
+	const $ = (id) => document.getElementById(id);
+	const SESSION_KEY = 'tapntap.admin.session';
+	let session = null; // { url, auth, user } kept only for this browser tab (sessionStorage)
+
+	function setStatus(el, message, kind = '') { el.textContent = message; el.className = `status ${kind}`; }
+
+	async function api(path, options = {}) {
+		const response = await fetch(`${session.url}${path}`, {
+			...options,
+			headers: { 'Content-Type': 'application/json', Authorization: session.auth, ...(options.headers ?? {}) },
+		});
+		const body = await response.json().catch(() => ({}));
+		if (response.status === 401) { logout('Session expired or wrong password. Please sign in again.'); throw new Error('Not signed in'); }
+		if (response.status === 429) throw new Error('Too many attempts. Wait a minute and try again.');
+		if (response.status === 404) throw new Error('This server does not support this yet (deploy the Rust backend).');
+		if (!response.ok) throw new Error(body.error?.message ?? `Request failed (${response.status})`);
+		return body.data;
+	}
+
+	function withBusy(buttons, fn) {
+		return async () => {
+			buttons.forEach((b) => { b.disabled = true; });
+			try { await fn(); } finally { buttons.forEach((b) => { b.disabled = false; }); }
 		};
-		const status = document.querySelector('#status');
-		const preview = document.querySelector('#preview');
-		const buttons = [document.querySelector('#loadButton'), document.querySelector('#saveButton')];
+	}
 
-		function setStatus(message, kind = '') {
-			status.textContent = message;
-			status.className = `status ${kind}`;
+	// ---------- auth ----------
+	async function login(event) {
+		event.preventDefault();
+		const url = $('backendUrl').value.trim().replace(/\/+$/, '');
+		if (!/^https:\/\//.test(url) && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(url)) {
+			return setStatus($('loginStatus'), 'Backend URL must use https:// (or local http://127.0.0.1).', 'error');
 		}
-
-		function setBusy(busy) {
-			buttons.forEach((button) => { button.disabled = busy; });
+		const user = $('username').value.trim();
+		session = { url, user, auth: `Basic ${btoa(unescape(encodeURIComponent(`${user}:${$('password').value}`)))}` };
+		$('loginButton').disabled = true;
+		setStatus($('loginStatus'), 'Signing in...');
+		try {
+			const data = await api('/api/v1/admin/app-update'); // verifies the credentials
+			sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+			$('password').value = '';
+			showApp();
+			fillUpdate(data);
+			loadConfig();
+		} catch (error) {
+			session = null;
+			setStatus($('loginStatus'), error.message === 'Not signed in' ? 'Wrong username or password.' : error.message, 'error');
+		} finally {
+			$('loginButton').disabled = false;
 		}
+	}
 
-		function baseUrl() {
-			return fields.backendUrl.value.trim().replace(/\/+$/, '');
+	function logout(message = '') {
+		session = null;
+		sessionStorage.removeItem(SESSION_KEY);
+		$('appView').hidden = true;
+		$('loginView').hidden = false;
+		setStatus($('loginStatus'), message, message ? 'error' : '');
+	}
+
+	function showApp() {
+		$('loginView').hidden = true;
+		$('appView').hidden = false;
+		$('who').textContent = `Signed in as ${session.user}`;
+		$('server').textContent = session.url.replace(/^https?:\/\//, '');
+	}
+
+	// ---------- tabs ----------
+	document.querySelectorAll('[role="tab"]').forEach((tab) => tab.addEventListener('click', () => {
+		document.querySelectorAll('[role="tab"]').forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+		document.querySelectorAll('[role="tabpanel"]').forEach((p) => { p.hidden = p.id !== tab.dataset.tab; });
+	}));
+
+	// ---------- force update ----------
+	const updateFields = ['enabled', 'force', 'minSupportedVersion', 'latestVersion', 'title', 'message', 'updateUrl', 'updateUrlAndroid', 'updateUrlIos'];
+	function fillUpdate(d) {
+		$('enabled').checked = Boolean(d.enabled);
+		$('force').checked = Boolean(d.force);
+		for (const k of updateFields.slice(2)) $(k).value = d[k] ?? '';
+	}
+	function updatePayload() {
+		const p = { enabled: $('enabled').checked, force: $('force').checked };
+		for (const k of updateFields.slice(2)) {
+			const v = $(k).value.trim();
+			p[k] = (k === 'updateUrlAndroid' || k === 'updateUrlIos') ? (v || null) : v;
 		}
+		return p;
+	}
+	const updateButtons = [$('updateReload'), $('updateSave')];
+	$('updateReload').addEventListener('click', withBusy(updateButtons, async () => {
+		try { fillUpdate(await api('/api/v1/admin/app-update')); setStatus($('updateStatus'), 'Loaded.', 'success'); }
+		catch (e) { setStatus($('updateStatus'), e.message, 'error'); }
+	}));
+	$('updateSave').addEventListener('click', withBusy(updateButtons, async () => {
+		const p = updatePayload();
+		if (p.enabled && p.force && !confirm(`Block every app version below ${p.minSupportedVersion}? Players on older builds will be forced to update.`)) return;
+		try { fillUpdate(await api('/api/v1/admin/app-update', { method: 'PUT', body: JSON.stringify(p) })); setStatus($('updateStatus'), 'Saved. Apps pick this up on their next launch.', 'success'); }
+		catch (e) { setStatus($('updateStatus'), e.message, 'error'); }
+	}));
 
-		function authHeader() {
-			return `Basic ${btoa(`${fields.username.value}:${fields.password.value}`)}`;
+	// ---------- remote config ----------
+	function fillConfig(d) {
+		$('configValues').value = JSON.stringify(d.values ?? {}, null, 2);
+		$('configTtlDays').value = String(Math.round(((d.ttlSeconds ?? 432000) / 86400) * 100) / 100);
+		$('configUpdatedAt').value = d.updatedAt ? new Date(d.updatedAt).toLocaleString() : '';
+	}
+	function parseValues() {
+		let values;
+		try { values = JSON.parse($('configValues').value || '{}'); } catch (e) { throw new Error(`Invalid JSON: ${e.message}`); }
+		if (values === null || typeof values !== 'object' || Array.isArray(values)) throw new Error('Values must be a JSON object like {"key": true}.');
+		return values;
+	}
+	async function loadConfig() {
+		try { fillConfig(await api('/api/v1/admin/config')); setStatus($('configStatus'), 'Loaded.', 'success'); }
+		catch (e) { setStatus($('configStatus'), e.message, 'error'); }
+	}
+	const configButtons = [$('configReload'), $('configSave'), $('configFormat')];
+	$('configFormat').addEventListener('click', () => {
+		try { $('configValues').value = JSON.stringify(parseValues(), null, 2); setStatus($('configStatus'), 'JSON is valid.', 'success'); }
+		catch (e) { setStatus($('configStatus'), e.message, 'error'); }
+	});
+	$('configReload').addEventListener('click', withBusy(configButtons, loadConfig));
+	$('configSave').addEventListener('click', withBusy(configButtons, async () => {
+		try {
+			const values = parseValues();
+			const days = Number($('configTtlDays').value);
+			const ttlSeconds = Math.round(days * 86400);
+			if (!Number.isFinite(days) || ttlSeconds < 3600 || ttlSeconds > 2592000) throw new Error('Refresh interval must be between 1 hour (0.05 days) and 30 days.');
+			fillConfig(await api('/api/v1/admin/config', { method: 'PUT', body: JSON.stringify({ values, ttlSeconds }) }));
+			setStatus($('configStatus'), 'Saved. Apps refresh it when their cached copy expires.', 'success');
+		} catch (e) { setStatus($('configStatus'), e.message, 'error'); }
+	}));
+
+	// ---------- boot ----------
+	$('loginForm').addEventListener('submit', login);
+	$('logoutButton').addEventListener('click', () => logout());
+	try {
+		const saved = JSON.parse(sessionStorage.getItem(SESSION_KEY) ?? 'null');
+		if (saved?.url && saved?.auth) {
+			session = saved;
+			showApp();
+			api('/api/v1/admin/app-update').then(fillUpdate).catch(() => {});
+			loadConfig();
 		}
-
-		function payloadFromForm() {
-			return {
-				enabled: fields.enabled.checked,
-				force: fields.force.checked,
-				minSupportedVersion: fields.minSupportedVersion.value.trim(),
-				latestVersion: fields.latestVersion.value.trim(),
-				title: fields.title.value.trim(),
-				message: fields.message.value.trim(),
-				updateUrl: fields.updateUrl.value.trim(),
-			};
-		}
-
-		function fillForm(data) {
-			fields.enabled.checked = Boolean(data.enabled);
-			fields.force.checked = Boolean(data.force);
-			fields.minSupportedVersion.value = data.minSupportedVersion ?? '';
-			fields.latestVersion.value = data.latestVersion ?? '';
-			fields.title.value = data.title ?? '';
-			fields.message.value = data.message ?? '';
-			fields.updateUrl.value = data.updateUrl ?? '';
-			preview.hidden = false;
-			preview.textContent = JSON.stringify(data, null, 2);
-		}
-
-		async function request(path, options = {}) {
-			const response = await fetch(`${baseUrl()}${path}`, {
-				...options,
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: authHeader(),
-					...(options.headers ?? {}),
-				},
-			});
-			const body = await response.json().catch(() => ({}));
-			if (!response.ok) {
-				throw new Error(body.error?.message ?? `Request failed (${response.status})`);
-			}
-			return body.data;
-		}
-
-		async function loadCurrent() {
-			setBusy(true);
-			setStatus('Loading current settings...');
-			try {
-				const data = await request('/api/v1/admin/app-update');
-				fillForm(data);
-				setStatus('Loaded current settings.', 'success');
-			} catch (error) {
-				setStatus(error.message, 'error');
-			} finally {
-				setBusy(false);
-			}
-		}
-
-		async function saveCurrent() {
-			setBusy(true);
-			setStatus('Saving settings...');
-			try {
-				const data = await request('/api/v1/admin/app-update', {
-					method: 'PUT',
-					body: JSON.stringify(payloadFromForm()),
-				});
-				fillForm(data);
-				setStatus('Saved force update settings.', 'success');
-			} catch (error) {
-				setStatus(error.message, 'error');
-			} finally {
-				setBusy(false);
-			}
-		}
-
-		document.querySelector('#loadButton').addEventListener('click', loadCurrent);
-		document.querySelector('#saveButton').addEventListener('click', saveCurrent);
-	</script>
+	} catch { sessionStorage.removeItem(SESSION_KEY); }
+</script>
 </body>
 </html>
