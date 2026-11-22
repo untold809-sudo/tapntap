@@ -1,0 +1,13 @@
+# Cloudflare Pages merges headers from every matching rule (it does not
+# override), so a blanket /content/* immutable rule would stack on the manifest.
+# Immutable is therefore set per content folder; manifest files stay no-cache.
+/content/manifest.json
+  Cache-Control: no-cache
+/content/manifest.sig
+  Cache-Control: no-cache
+/content/career/*
+  Cache-Control: public, max-age=31536000, immutable
+/content/arcade/*
+  Cache-Control: public, max-age=31536000, immutable
+/content/daily/*
+  Cache-Control: public, max-age=31536000, immutable
