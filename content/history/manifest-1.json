@@ -1,5 +1,0 @@
-{"manifestVersion":1,"contentVersion":1,"minApp":"1.0.0","generatedAt":"2026-11-22T00:00:00Z","files":[
-{"path":"daily/2027-01.r1.json","kind":"daily","revision":1,"sha256":"ca7b96de0a9a6c4885b03981d37922312764fcc867d491a80f9554f93a920beb","bytes":16092},
-{"path":"daily/2027-02.r1.json","kind":"daily","revision":1,"sha256":"86677e7ff665ec900ddb2a4cb4f7a389379d8d96f618c748b992045e11b1c77b","bytes":14612},
-{"path":"daily/2027-03.r1.json","kind":"daily","revision":1,"sha256":"7fe5916f8d8a7bc6cfa5d45706f74241a9d6d27e51854fe8fd8e6146e3f75147","bytes":16098}
-]}
