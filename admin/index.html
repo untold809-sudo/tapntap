@@ -278,7 +278,7 @@
 	function grantBody() {
 		const modifiers = {};
 		for (const k of ['FREEZE', 'FIRE', 'DOUBLE_TAP', 'SHIELD']) { const n = Number($('grant' + k).value); if (n > 0) modifiers[k] = n; }
-		const b = { campaignId: $('grantCampaign').value.trim(), coins: Number($('grantCoins').value) || 0, modifiers, note: $('grantNote').value.trim() || undefined };
+		const b = { campaignId: $('grantCampaign').value.trim().toLowerCase().replace(/\s+/g, '-'), coins: Number($('grantCoins').value) || 0, modifiers, note: $('grantNote').value.trim() || undefined };
 		if ($('grantTarget').value === 'player') b.player = $('grantPlayer').value.trim();
 		return b;
 	}
