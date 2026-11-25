@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delete your account — TapTap</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --line: #e2e8f0;
+      --accent: #1d4ed8;
+      --accent-soft: #dbeafe;
+      --danger: #b91c1c;
+      --danger-soft: #fee2e2;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.7;
+    }
+
+    .page {
+      max-width: 820px;
+      margin: 48px auto;
+      padding: 24px 20px 64px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+      padding: 28px 32px;
+    }
+
+    .topbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .topbar a,
+    .site-footer a {
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .topbar a {
+      background: var(--accent-soft);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.96rem;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      line-height: 1.3;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.98rem;
+      margin-bottom: 20px;
+    }
+
+    p, li, td, th, label {
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 10px 0 20px;
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    .section {
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      margin-top: 26px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 20px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      background: #f1f5f9;
+      font-size: 0.96rem;
+    }
+
+    /* Request form */
+    form {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 12px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .field .hint {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      font: inherit;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    input:focus {
+      outline: 3px solid var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    button {
+      font: inherit;
+      font-weight: 700;
+      padding: 12px 22px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover:not(:disabled) {
+      background: #1e40af;
+    }
+
+    button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    .form-error {
+      color: var(--danger);
+      font-weight: 700;
+      min-height: 1.4em;
+      margin: 0 0 12px;
+    }
+
+    .result {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+    }
+
+    .result:empty {
+      display: none;
+    }
+
+    .result code {
+      font-size: 1.05rem;
+      font-weight: 700;
+      word-break: break-all;
+    }
+
+    .site-footer {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      font-size: 0.96rem;
+    }
+
+    .site-footer nav {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .site-footer a:hover {
+      text-decoration: underline;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 22px 18px; }
+      th, td { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <div class="topbar">
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="support.html">Support</a>
+      </div>
+
+      <h1>DELETE YOUR ACCOUNT</h1>
+      <div class="meta">TapTap · Developer: <span>[OWNER: developer name as on Google Play]</span> · Last updated: 24 November 2026</div>
+
+      <p>You can delete your TapTap account and its data in the app, or by sending a request on this page. You do not need to reinstall the app to use the web request. Deletion does not need you to contact us first.</p>
+
+      <div class="section">
+        <h2>1. Delete in the app</h2>
+        <ol>
+          <li>Open TapTap and go to <strong>Settings</strong>.</li>
+          <li>Go to <strong>Legal</strong>.</li>
+          <li>Tap <strong>Delete account</strong>, read the list of what is deleted and kept, and confirm.</li>
+        </ol>
+        <p class="muted">The app then shows a "Deletion in progress" screen with a reference number.</p>
+      </div>
+
+      <div class="section">
+        <h2>2. Request deletion on the web</h2>
+        <p>Use this form if you cannot open the app. Enter your player tag or username. If you have your <strong>deletion code</strong> (shown in Settings &gt; Legal), enter it too: the code lets us match the request to your account without any further checks. Your contact email is optional and is used only to reply to this request.</p>
+
+        <form id="deletion-form" novalidate>
+          <div class="field">
+            <label for="playerTag">Player tag or username</label>
+            <input id="playerTag" name="playerTag" type="text" maxlength="40" autocomplete="off" required />
+          </div>
+
+          <div class="field">
+            <label for="deletionCode">Deletion code <span class="muted">(optional)</span></label>
+            <input id="deletionCode" name="deletionCode" type="text" maxlength="120" autocomplete="off" spellcheck="false" />
+            <span class="hint">Shown in Settings &gt; Legal in the app. Copy it when you can, so you still have it if you lose the device.</span>
+          </div>
+
+          <div class="field">
+            <label for="contact">Contact email <span class="muted">(optional)</span></label>
+            <input id="contact" name="contact" type="email" maxlength="120" autocomplete="email" />
+            <span class="hint">Used only to reply to this request.</span>
+          </div>
+
+          <p id="form-error" class="form-error" role="alert"></p>
+          <button id="submit-btn" type="submit">Request deletion</button>
+        </form>
+
+        <div id="result" class="result" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="section">
+        <h2>3. What is deleted and what is kept</h2>
+        <table>
+          <thead>
+            <tr><th>Data</th><th>What happens</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Identifiers: guest account ID, player tag, display name, username, avatar</td>
+              <td><strong>Deleted</strong> within 30 days.</td>
+            </tr>
+            <tr>
+              <td>Friends, friend requests, blocks, social settings, privacy consents</td>
+              <td><strong>Deleted</strong> within 30 days.</td>
+            </tr>
+            <tr>
+              <td>Analytics profile held for your player ID (product analytics service)</td>
+              <td><strong>Deleted</strong> within 30 days.</td>
+            </tr>
+            <tr>
+              <td>Match results and the coin ledger</td>
+              <td><strong>Kept, anonymised.</strong> Your name and identifiers are removed, so the records no longer point to you. They are kept so that your opponents' results and coin history remain correct.</td>
+            </tr>
+            <tr>
+              <td>Reports filed against your account</td>
+              <td><strong>Kept, anonymised for 90 days</strong> for abuse review, then deleted.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="muted">Anonymised match and coin records do not contain your name or identifiers after deletion.</p>
+      </div>
+
+      <div class="section">
+        <h2>4. Without the app or your deletion code</h2>
+        <ul>
+          <li><strong>Inactivity:</strong> a guest account with no activity for 24 months is anonymised automatically, even if you never submit a request.</li>
+          <li><strong>Manual verification:</strong> email <a href="mailto:sonubodat77@gmail.com">sonubodat77@gmail.com</a> with your player tag and the email address you used for the request. We may ask you for more details to confirm the account belongs to you before we delete it.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>5. Timeline</h2>
+        <ul>
+          <li>Your request is recorded immediately. You get a reference number to keep.</li>
+          <li>Your account is disabled straight away: you can no longer play or sign in with that device account.</li>
+          <li>Deletion is completed in the background. It is expected to be finished within <strong>30 days</strong>.</li>
+          <li>If you gave a contact email, we reply to it when the request is complete or if we need more information.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>6. Questions</h2>
+        <p>Read our <a href="privacy.html">Privacy Policy</a> for more detail, or email <a href="mailto:sonubodat77@gmail.com">sonubodat77@gmail.com</a>.</p>
+      </div>
+
+      <footer class="site-footer">
+        <nav aria-label="Legal">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="delete-account.html">Delete account</a>
+          <a href="children.html">Children</a>
+          <a href="support.html">Support</a>
+        </nav>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var API_URL = 'https://tapntap-1.onrender.com/api/v1/deletion-requests';
+      var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      var GENERIC_ACK = 'Thank you. If an account matches these details, a deletion request has been queued. For help, email sonubodat77@gmail.com with your player tag.';
+      var NETWORK_ERROR = 'We could not send your request because the connection failed. Check your connection and try again.';
+
+      var form = document.getElementById('deletion-form');
+      var button = document.getElementById('submit-btn');
+      var errorBox = document.getElementById('form-error');
+      var resultBox = document.getElementById('result');
+
+      function setResult(message, reference) {
+        resultBox.textContent = '';
+        resultBox.appendChild(document.createTextNode(message));
+        if (reference) {
+          resultBox.appendChild(document.createElement('br'));
+          resultBox.appendChild(document.createTextNode('Reference: '));
+          var code = document.createElement('code');
+          code.textContent = reference;
+          resultBox.appendChild(code);
+        }
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        errorBox.textContent = '';
+        resultBox.textContent = '';
+
+        var playerTag = form.playerTag.value.trim();
+        var deletionCode = form.deletionCode.value.trim();
+        var contact = form.contact.value.trim();
+
+        if (!playerTag) {
+          errorBox.textContent = 'Enter your player tag or username.';
+          form.playerTag.focus();
+          return;
+        }
+        if (playerTag.length > 40) {
+          errorBox.textContent = 'The player tag or username is too long.';
+          form.playerTag.focus();
+          return;
+        }
+        if (deletionCode.length > 120) {
+          errorBox.textContent = 'The deletion code is too long. Check it and try again.';
+          form.deletionCode.focus();
+          return;
+        }
+        if (contact && (contact.length > 120 || !EMAIL_RE.test(contact))) {
+          errorBox.textContent = 'Enter a valid email address, or leave the field empty.';
+          form.contact.focus();
+          return;
+        }
+
+        var body = {
+          playerTag: playerTag,
+          deletionCode: deletionCode || null,
+          contact: contact || null
+        };
+
+        button.disabled = true;
+        button.textContent = 'Sending...';
+
+        fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        })
+          .then(function (response) {
+            if (response.status === 202) {
+              return response.json().catch(function () { return null; }).then(function (json) {
+                var reference = json && json.data && typeof json.data.reference === 'string' && json.data.reference.length <= 64
+                  ? json.data.reference
+                  : null;
+                setResult(GENERIC_ACK, reference);
+                form.reset();
+              });
+            }
+            // Same message for every other HTTP result, so the form does not reveal whether an account exists.
+            setResult(GENERIC_ACK, null);
+          })
+          .catch(function () {
+            setResult(NETWORK_ERROR, null);
+          })
+          .then(function () {
+            button.disabled = false;
+            button.textContent = 'Request deletion';
+          });
+      });
+    })();
+  </script>
+</body>
+</html>

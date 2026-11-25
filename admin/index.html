@@ -18,9 +18,9 @@
 		.panel { background: #11131dcc; border: 1px solid #ffffff14; border-radius: 18px; box-shadow: 0 24px 80px #00000055; padding: 22px; margin-bottom: 18px; }
 		.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 14px; }
 		label { display: grid; gap: 7px; color: #cbd5e1; font-size: .8rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
-		input, textarea { width: 100%; border: 1px solid #ffffff1f; border-radius: 12px; background: #08090f; color: #f8fafc; font: inherit; padding: 12px 14px; outline: none; }
+		input, textarea, select { width: 100%; border: 1px solid #ffffff1f; border-radius: 12px; background: #08090f; color: #f8fafc; font: inherit; padding: 12px 14px; outline: none; }
 		textarea { min-height: 220px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; }
-		input:focus, textarea:focus { border-color: #63e6ff; box-shadow: 0 0 0 3px #63e6ff22; }
+		input:focus, textarea:focus, select:focus { border-color: #63e6ff; box-shadow: 0 0 0 3px #63e6ff22; }
 		.full { grid-column: 1 / -1; }
 		.switch { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px; border: 1px solid #ffffff14; border-radius: 14px; background: #ffffff08; text-transform: none; letter-spacing: 0; font-size: .95rem; }
 		.switch input { width: 22px; height: 22px; accent-color: #b8f24a; }
@@ -68,6 +68,7 @@
 		<div class="tabs" role="tablist">
 			<button role="tab" aria-selected="true" data-tab="updateTab" type="button">Force update</button>
 			<button role="tab" aria-selected="false" data-tab="configTab" type="button">Remote config</button>
+			<button role="tab" aria-selected="false" data-tab="grantTab" type="button">Grants</button>
 		</div>
 
 		<!-- FORCE UPDATE -->
@@ -110,6 +111,31 @@
 				<button id="configSave" type="button">Save remote config</button>
 			</div>
 			<div id="configStatus" class="status" role="status" aria-live="polite"></div>
+		</section>
+		<!-- GRANTS -->
+		<section id="grantTab" class="panel" role="tabpanel" aria-label="Grants" hidden>
+			<h2>Grants</h2>
+			<p>Give free coins or power-ups. One player (uuid or username) or every active player. Re-sending the same campaign id never double-credits.</p>
+			<div class="grid">
+				<label>Target
+					<select id="grantTarget"><option value="all">Everyone (active players)</option><option value="player">One player</option></select>
+				</label>
+				<label id="grantPlayerWrap" hidden>Player (uuid or username)<input id="grantPlayer" placeholder="username"></label>
+				<label>Campaign id (unique, a-z 0-9 - _)<input id="grantCampaign" maxlength="40" placeholder="welcome-600"></label>
+				<label>Coins<input id="grantCoins" type="number" min="0" step="1" value="0"></label>
+				<label>FREEZE<input id="grantFREEZE" type="number" min="0" max="99" value="0"></label>
+				<label>FIRE<input id="grantFIRE" type="number" min="0" max="99" value="0"></label>
+				<label>DOUBLE_TAP<input id="grantDOUBLE_TAP" type="number" min="0" max="99" value="0"></label>
+				<label>SHIELD<input id="grantSHIELD" type="number" min="0" max="99" value="0"></label>
+				<label class="full">Note (internal)<input id="grantNote" maxlength="200"></label>
+			</div>
+			<div class="actions">
+				<button id="grantRefresh" class="secondary" type="button">Refresh list</button>
+				<button id="grantPreview" class="secondary" type="button">Preview count</button>
+				<button id="grantSend" type="button">Send grant</button>
+			</div>
+			<div id="grantStatus" class="status" role="status" aria-live="polite"></div>
+			<pre id="grantList" style="white-space:pre-wrap;font-size:12px"></pre>
 		</section>
 	</div>
 </main>
@@ -247,6 +273,49 @@
 			setStatus($('configStatus'), 'Saved. Apps refresh it when their cached copy expires.', 'success');
 		} catch (e) { setStatus($('configStatus'), e.message, 'error'); }
 	}));
+
+	// ---------- grants ----------
+	function grantBody() {
+		const modifiers = {};
+		for (const k of ['FREEZE', 'FIRE', 'DOUBLE_TAP', 'SHIELD']) { const n = Number($('grant' + k).value); if (n > 0) modifiers[k] = n; }
+		const b = { campaignId: $('grantCampaign').value.trim(), coins: Number($('grantCoins').value) || 0, modifiers, note: $('grantNote').value.trim() || undefined };
+		if ($('grantTarget').value === 'player') b.player = $('grantPlayer').value.trim();
+		return b;
+	}
+	const grantPath = () => ($('grantTarget').value === 'player' ? '/api/v1/admin/grants/player' : '/api/v1/admin/grants/all');
+	async function loadGrants() {
+		try {
+			const d = await api('/api/v1/admin/grants');
+			$('grantList').textContent = d.campaigns.map((c) => `${c.campaignId}  ${c.state}  ${c.done}/${c.total}  failed ${c.failed}  coins ${c.coins} ${JSON.stringify(c.modifiers)}  ${c.createdAt}`).join('\n') || 'No campaigns yet.';
+			return d.campaigns.some((c) => c.state === 'running');
+		} catch (e) { setStatus($('grantStatus'), e.message, 'error'); return false; }
+	}
+	let grantTimer = null;
+	function pollGrants() {
+		clearInterval(grantTimer);
+		grantTimer = setInterval(async () => { if (document.hidden) return; if (!(await loadGrants())) clearInterval(grantTimer); }, 3000);
+	}
+	$('grantTarget').addEventListener('change', () => { $('grantPlayerWrap').hidden = $('grantTarget').value !== 'player'; });
+	const grantButtons = [$('grantRefresh'), $('grantPreview'), $('grantSend')];
+	$('grantRefresh').addEventListener('click', withBusy(grantButtons, loadGrants));
+	$('grantPreview').addEventListener('click', withBusy(grantButtons, async () => {
+		try {
+			if ($('grantTarget').value === 'player') return setStatus($('grantStatus'), 'Preview is for "Everyone" only.', 'error');
+			const d = await api('/api/v1/admin/grants/all', { method: 'POST', body: JSON.stringify({ ...grantBody(), dryRun: true }) });
+			setStatus($('grantStatus'), `Would reach ${d.total} active players.`, 'success');
+		} catch (e) { setStatus($('grantStatus'), e.message, 'error'); }
+	}));
+	$('grantSend').addEventListener('click', withBusy(grantButtons, async () => {
+		try {
+			const b = grantBody();
+			const word = `GRANT ${b.coins}`;
+			if (prompt(`Type "${word}" to send to ${$('grantTarget').value === 'all' ? 'EVERYONE' : b.player}.`) !== word) return setStatus($('grantStatus'), 'Cancelled.');
+			const d = await api(grantPath(), { method: 'POST', body: JSON.stringify(b) });
+			setStatus($('grantStatus'), d.total != null ? `Started for ${d.total} players${d.existing ? ' (campaign already existed, resuming)' : ''}.` : 'Granted.', 'success');
+			if (await loadGrants()) pollGrants();
+		} catch (e) { setStatus($('grantStatus'), e.message, 'error'); }
+	}));
+	document.querySelector('[data-tab="grantTab"]').addEventListener('click', loadGrants);
 
 	// ---------- boot ----------
 	$('loginForm').addEventListener('submit', login);

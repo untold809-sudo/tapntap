@@ -7,7 +7,11 @@
 	<style>
 		:root { font-family: Arial, sans-serif; color: #172554; background: #e0f2fe; }
 		* { box-sizing: border-box; }
-		body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+		body { margin: 0; min-height: 100vh; display: grid; grid-template-rows: 1fr auto; place-items: center; }
+			.site-footer { padding: 1.5rem 1rem; text-align: center; }
+			.site-footer nav { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; justify-content: center; }
+			.site-footer a { display: inline; padding: 0; background: none; color: #1e3a8a; font-weight: 600; font-size: .95rem; }
+			.site-footer a:hover { background: none; text-decoration: underline; }
 		main { width: min(90%, 560px); padding: 3.5rem 2rem; text-align: center; background: white; border-radius: 24px; box-shadow: 0 16px 40px #1e40af26; }
 		h1 { margin: 0 0 1rem; font-size: clamp(2.3rem, 8vw, 4rem); }
 		p { margin: 0 0 2rem; color: #475569; font-size: 1.1rem; }
@@ -21,5 +25,14 @@
 		<p>Simple, quick, and ready when you are.</p>
 		<a href="#get-started">Get started</a>
 	</main>
+	<footer class="site-footer">
+		<nav aria-label="Legal">
+			<a href="privacy.html">Privacy</a>
+			<a href="terms.html">Terms</a>
+			<a href="delete-account.html">Delete account</a>
+			<a href="children.html">Children</a>
+			<a href="support.html">Support</a>
+		</nav>
+	</footer>
 </body>
 </html>

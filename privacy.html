@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Privacy Policy — Tap & Tap</title>
+  <title>Privacy Policy — TapTap</title>
   <style>
     :root {
       --bg: #f8fafc;
@@ -13,6 +13,8 @@
       --line: #e2e8f0;
       --accent: #1d4ed8;
       --accent-soft: #dbeafe;
+      --flag-bg: #fef3c7;
+      --flag-text: #78350f;
     }
 
     * { box-sizing: border-box; }
@@ -20,6 +22,7 @@
     body {
       margin: 0;
       background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+      background-color: var(--bg);
       color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
       line-height: 1.7;
@@ -46,10 +49,14 @@
       margin-bottom: 18px;
     }
 
-    .topbar a {
+    .topbar a,
+    .site-footer a {
       text-decoration: none;
       color: var(--accent);
       font-weight: 700;
+    }
+
+    .topbar a {
       background: var(--accent-soft);
       padding: 8px 12px;
       border-radius: 999px;
@@ -66,6 +73,16 @@
       margin-bottom: 10px;
     }
 
+    h2 {
+      font-size: 1.35rem;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 1.08rem;
+      margin: 18px 0 6px;
+    }
+
     .meta {
       color: var(--muted);
       font-size: 0.98rem;
@@ -75,6 +92,7 @@
     p, li {
       font-size: 1rem;
       color: var(--text);
+      max-width: 72ch;
     }
 
     ul {
@@ -96,6 +114,57 @@
       margin-top: 26px;
     }
 
+    .summary {
+      background: var(--accent-soft);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin: 22px 0 8px;
+    }
+
+    .summary h2 {
+      margin-bottom: 6px;
+    }
+
+    .summary ol {
+      margin: 8px 0 0;
+      padding-left: 22px;
+    }
+
+    .summary li + li {
+      margin-top: 6px;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+      margin: 12px 0 22px;
+    }
+
+    .table th,
+    .table td {
+      text-align: left;
+      vertical-align: top;
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .table th {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .ph {
+      background: var(--flag-bg);
+      color: var(--flag-text);
+      padding: 1px 5px;
+      border-radius: 5px;
+      font-size: 0.92em;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
     .small {
       color: var(--muted);
       font-size: 0.97rem;
@@ -103,6 +172,45 @@
 
     a {
       color: var(--accent);
+    }
+
+    .site-footer {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      gap: 10px 18px;
+      flex-wrap: wrap;
+      font-size: 0.96rem;
+    }
+
+    a:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 640px) {
+      .card { padding: 22px 18px; }
+      .table thead { display: none; }
+      .table,
+      .table tbody,
+      .table tr,
+      .table td { display: block; width: 100%; }
+      .table tr {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 10px 14px;
+        margin-bottom: 12px;
+      }
+      .table td { border: 0; padding: 4px 0; }
+      .table td::before {
+        content: attr(data-label);
+        display: block;
+        font-weight: 700;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
     }
   </style>
 </head>
@@ -115,105 +223,415 @@
         <a href="support.html">Support</a>
       </div>
 
-      <h1>PRIVACY POLICY — TAP &amp; TAP</h1>
-      <div class="meta">Last updated: October 6, 2026</div>
+      <h1>Privacy policy</h1>
+      <div class="meta">Version 2 · Effective 24 November 2026</div>
 
-      <p>Tap &amp; Tap ("the game", "we", "us") is a free mobile game where two players tap as fast as they can in a real-time match. This Privacy Policy explains what information the game collects, how it is used, and the choices you have. By using the game you agree to this policy.</p>
-
-      <p><strong>Contact:</strong> sonubodat77@gmail.com</p>
+      <p>TapTap is a free mobile game where two players tap as fast as they can in a real-time match. This policy explains what we collect, why, who receives it, how long we keep it, and the choices you have. "We" and "us" mean the operator of TapTap named in section 1.</p>
 
       <div class="section">
-        <h2>1. INFORMATION WE COLLECT</h2>
+        <h2>1. Who we are and how to contact us</h2>
+        <p>Data controller: <span class="ph">[OWNER: legal name and postal address]</span></p>
+        <p><strong>Contact:</strong> sonubodat77@gmail.com</p>
+        <p>Privacy requests and questions: <a href="mailto:sonubodat77@gmail.com">sonubodat77@gmail.com</a></p>
+      </div>
 
-        <h3>a) Information you provide</h3>
+      <div class="summary">
+        <h2>The short version</h2>
+        <ol>
+          <li>We collect a display name you choose, a random device ID, your match results and basic technical data. We do not ask for your real name, email, phone number, contacts, photos, microphone, camera or precise location.</li>
+          <li>Analytics and session replay are only used with your consent, and session replay is only for adults. Replays can show other players' names on screen. Text you type into fields is masked.</li>
+          <li>Ads are shown by Google AdMob. Ads are personalised only if you agree in the consent form.</li>
+          <li>TapTap is not for children under 13. Teens (13 to 17) get more limited ads and no session replay.</li>
+          <li>You can change your analytics and ad choices at any time in Settings. The change takes effect straight away.</li>
+          <li>Deleting your account ends your sessions at once and removes your personal identifiers within 30 days. Some match and coin records stay, anonymised, so other players' results and rewards stay correct.</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>2. What we collect and why</h2>
+        <p>The table lists each kind of data, why we use it, who receives it and how long it is kept. Items marked <span class="ph">[OWNER]</span> are still being confirmed.</p>
+
+        <table class="table">
+          <thead>
+            <tr><th>Data</th><th>Why</th><th>Who receives it</th><th>How long</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Data">Device ID: a random code stored in the phone's secure storage</td>
+              <td data-label="Why">Signs you in as a guest and keeps your account with you</td>
+              <td data-label="Who receives it">Supabase (database), Render (servers)</td>
+              <td data-label="How long">On your phone until you log out, reset or reinstall. On our servers until account deletion, then replaced with a random value linked to nothing.</td>
+            </tr>
+            <tr>
+              <td data-label="Data">Player ID: a random ID for your account</td>
+              <td data-label="Why">Account key, matchmaking, leaderboards, and the link for analytics</td>
+              <td data-label="Who receives it">Supabase, Render, Redis Cloud, PostHog (US)</td>
+              <td data-label="How long">Until account deletion (section 7)</td>
+            </tr>
+            <tr>
+              <td data-label="Data">Display name: up to 20 characters, chosen by you</td>
+              <td data-label="Why">Shown in matches, leaderboards and challenge links</td>
+              <td data-label="Who receives it">Supabase, Render. Other players can see it.</td>
+              <td data-label="How long">Until you change it or delete your account. Then shown as "Deleted player".</td>
+            </tr>
+            <tr>
+              <td data-label="Data">Username: optional, unique, permanent once claimed</td>
+              <td data-label="Why">Friend search and public profile</td>
+              <td data-label="Who receives it">Supabase, Render. Searchable by other players.</td>
+              <td data-label="How long">Until account deletion, then removed</td>
+            </tr>
+            <tr>
+              <td data-label="Data">Avatar and cosmetics you own or equip</td>
+              <td data-label="Why">Shows your look in the game</td>
+              <td data-label="Who receives it">Supabase, Render</td>
+              <td data-label="How long">Until account deletion, then removed</td>
+            </tr>
+            <tr>
+              <td data-label="Data">Match records: taps, scores, win or loss, duration, streaks, and whether the opponent was a bot</td>
+              <td data-label="Why">Run matches, statistics, leaderboards and fairness checks</td>
+              <td data-label="Who receives it">Supabase, Render. Summary events go to PostHog (US).</td>
+              <td data-label="How long">Kept after deletion in anonymised form (section 7)</td>
+            </tr>
+            <tr>
+              <td data-label="Data">Coins, wallet, rewards and rewarded-ad grants (ledger entries)</td>
+              <td data-label="Why">Keep balances correct, prevent fraud and duplicate rewards</td>
+              <td data-label="Who receives it">Supabase, Render</td>
+              <td data-label="How long">Kept after deletion in anonymised form (section 7). Ledger entries cannot be edited.</td>
+            </tr>
+            <tr>
+              <td data-label="Data">Career progress, friends, blocks and social settings</td>
+              <td data-label="Why">Career boards, friend lists, blocks and privacy settings</td>
+              <td data-label="Who receives it">Supabase, Render</td>
+              <td data-label="How long">Friend links and blocks are removed when you remove them or delete your account. Progress is removed on deletion.</td>
+            </tr>
+            <tr>
+              <td data-label="Data">Reports you send: reason and a note of up to 200 characters</td>
+              <td data-label="Why">Keep the game safe</td>
+              <td data-label="Who receives it">Supabase, Render</td>
+              <td data-label="How long">Removed when you delete your account. Reports about a deleted account are kept anonymised for 90 days, then deleted.</td>
+            </tr>
+            <tr>
+              <td data-label="Data">Anti-cheat signals: tap timing pattern, risk level, flagged matches</td>
+              <td data-label="Why">Detect cheating and keep matches fair</td>
+              <td data-label="Who receives it">Supabase, Render</td>
+              <td data-label="How long"><span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Data">IP address, used only to limit requests</td>
+              <td data-label="Why">Stop abuse and overload</td>
+              <td data-label="Who receives it">Redis Cloud, Render</td>
+              <td data-label="How long">About 60 seconds. Not stored in our database.</td>
+            </tr>
+            <tr>
+              <td data-label="Data">Sign-in tokens, stored as hashes</td>
+              <td data-label="Why">Keep you signed in safely</td>
+              <td data-label="Who receives it">Supabase, Render</td>
+              <td data-label="How long">Revoked on account deletion. Expired records: <span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Data">Live state: online status and matchmaking</td>
+              <td data-label="Why">Show online status and find opponents</td>
+              <td data-label="Who receives it">Redis Cloud</td>
+              <td data-label="How long">Seconds to 5 minutes. Online status lasts 45 seconds.</td>
+            </tr>
+            <tr>
+              <td data-label="Data">Usage analytics: events such as "app opened" or "match finished", device model, operating system, app version</td>
+              <td data-label="Why">Understand and improve the game</td>
+              <td data-label="Who receives it">PostHog (US)</td>
+              <td data-label="How long">Only with your consent (section 5). PostHog retention: <span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Data">Session replay: recordings of the screen</td>
+              <td data-label="Why">Find screens that confuse people</td>
+              <td data-label="Who receives it">PostHog (US)</td>
+              <td data-label="How long">Adults who allow analytics only. Text you type is masked. Other on-screen text, including other players' names, can be recorded. Retention: <span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Data">Match and economy events sent from our servers: player ID, outcome, reward or purchase type</td>
+              <td data-label="Why">Product and economy measurement</td>
+              <td data-label="Who receives it">PostHog (US)</td>
+              <td data-label="How long">Sent for every player. <span class="ph">[LEGAL REVIEW]</span> Not yet switched off by the in-app analytics setting. Retention: <span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Data">Error and crash reports: error type, message and stack trace</td>
+              <td data-label="Why">Find and fix bugs</td>
+              <td data-label="Who receives it">PostHog (US)</td>
+              <td data-label="How long">Same as usage analytics. Retention: <span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Data">Server logs: request and error logs. These may include your player ID and event details.</td>
+              <td data-label="Why">Run and debug the service</td>
+              <td data-label="Who receives it">Render</td>
+              <td data-label="How long"><span class="ph">[OWNER: confirm Render log retention and production logging level]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Data">Ad data: advertising ID (Android), approximate location from your IP address, device and app information, ad interactions</td>
+              <td data-label="Why">Show, measure and fraud-check ads. Personalised ads only with your consent.</td>
+              <td data-label="Who receives it">Google AdMob and Google UMP (consent form)</td>
+              <td data-label="How long">Kept by Google under its own policies. <span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Data">Consent and age records: your choices, terms version and age group. Your date of birth is never stored.</td>
+              <td data-label="Why">Show that your choices were recorded, and apply age rules</td>
+              <td data-label="Who receives it">Supabase, Render</td>
+              <td data-label="How long">Removed when your account is deleted. <span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Data">Support and deletion requests: email, player tag, reference number</td>
+              <td data-label="Why">Answer you and show that your deletion was done</td>
+              <td data-label="Who receives it">Our email provider <span class="ph">[OWNER: name provider]</span>, Supabase</td>
+              <td data-label="How long">Deletion request contact is removed 30 days after the request is closed. Mailbox retention: <span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>We do not sell your personal information in the usual sense. We share data only with the service providers listed above, with Google for ads, and with authorities when the law requires it or to protect players and the game.</p>
+      </div>
+
+      <div class="section">
+        <h2>3. Opponents and bots</h2>
+        <p>If no other player is found quickly, the game may match you with a computer-controlled opponent. Bot opponents use a made-up name and are not real people. Bot matches work the same way as other matches.</p>
+      </div>
+
+      <div class="section">
+        <h2>4. Legal bases (EU and UK)</h2>
+        <p>If you are in the EU, EEA or UK, we rely on the following legal bases under the GDPR and UK GDPR. <span class="ph">[LEGAL REVIEW]</span></p>
+
+        <table class="table">
+          <thead>
+            <tr><th>Purpose</th><th>Legal basis</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Purpose">Running the game: your account, matches, leaderboards, rewards and friends</td>
+              <td data-label="Legal basis">Contract (Article 6(1)(b))</td>
+            </tr>
+            <tr>
+              <td data-label="Purpose">Usage analytics and error reports</td>
+              <td data-label="Legal basis">Consent (Article 6(1)(a)). Storing or reading data on your phone also needs consent under the ePrivacy rules.</td>
+            </tr>
+            <tr>
+              <td data-label="Purpose">Session replay (adults only)</td>
+              <td data-label="Legal basis">Consent (Article 6(1)(a))</td>
+            </tr>
+            <tr>
+              <td data-label="Purpose">Personalised ads</td>
+              <td data-label="Legal basis">Consent, given in the Google consent form</td>
+            </tr>
+            <tr>
+              <td data-label="Purpose">Non-personalised ads and ad fraud checks</td>
+              <td data-label="Legal basis">Legitimate interests (Article 6(1)(f)) <span class="ph">[LEGAL REVIEW]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Purpose">Anti-cheat, security, rate limiting, and keeping match and reward records correct for opponents</td>
+              <td data-label="Legal basis">Legitimate interests (Article 6(1)(f))</td>
+            </tr>
+            <tr>
+              <td data-label="Purpose">Answering your requests and recording deletions</td>
+              <td data-label="Legal basis">Legal obligation (Article 6(1)(c)) and legitimate interests</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>5. Children and teenagers</h2>
+        <h3>Under 13: not allowed</h3>
+        <p>TapTap is not for children under 13. When you start the app you enter your date of birth on a neutral age screen. If you are under 13, the screen says the game is not available to you. We do not create an account and do not collect analytics about you. See <a href="children.html">our children's page</a> for more.</p>
+
+        <h3>Teens aged 13 to 17</h3>
         <ul>
-          <li><strong>Display name.</strong> You can pick a name (up to 20 characters). Other players, leaderboards and challenge links can show it. Please do not use your real name or any personal information.</li>
+          <li>You see non-personalised ads only.</li>
+          <li>Session replay is off.</li>
+          <li>Usage analytics is off unless you turn it on.</li>
+          <li>In India and the USA, teens get the standard ad settings, unless the region requires consent. Where a US state requires consent (for example California), teens get the stricter settings. <span class="ph">[LEGAL REVIEW]</span></li>
         </ul>
 
-        <h3>b) Information created when you play</h3>
+        <h3>Your date of birth</h3>
+        <p>We use your date of birth once to work out your age group. We do not store it, log it or send it to analytics.</p>
+      </div>
+
+      <div class="section">
+        <h2>6. Your consent and how to withdraw it</h2>
+        <p>Where we need your consent, you can change your mind at any time:</p>
         <ul>
-          <li><strong>A random guest identifier.</strong> The game creates an anonymous guest account for you with a random device identifier stored on your phone. It is not your hardware ID, phone number, email or name.</li>
-          <li><strong>Gameplay data:</strong> match results, taps, scores, win/loss and streak statistics, power-up inventory and rewards you earn, challenges you create or accept, and leaderboard rank.</li>
-          <li><strong>Technical data:</strong> app version, operating system (Android or iOS), connection timing used to detect slow connections, and error and security logs.</li>
-          <li><strong>Analytics events:</strong> simple events such as "app opened", "match finished" or "reward ad watched", linked to your anonymous player ID, used to understand how the game is used and to fix problems.</li>
+          <li><strong>Analytics and session replay:</strong> Settings, then Privacy choices. Turn off "Analytics and improvement". This stops new data straight away and needs no restart.</li>
+          <li><strong>Ad choices:</strong> Settings, then Privacy choices, then Ad privacy options. This opens Google's consent form.</li>
+          <li><strong>Tracking on iPhone:</strong> Settings, then Privacy and Security, then Tracking. Turn off "Allow Apps to Request to Track".</li>
+          <li><strong>Ads on Android:</strong> Settings, then Google, then Ads. You can reset your advertising ID or turn off ad personalisation.</li>
         </ul>
-
-        <h3>c) Information collected by advertising</h3>
-        <p>The game shows ads through Google AdMob (Google LLC). AdMob may collect and use your device's advertising ID, IP address, device and app information, and ad interaction data to show and measure ads, prevent fraud, and (depending on your device settings) personalize ads. See Google's policy: <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noreferrer">https://policies.google.com/technologies/ads</a>.</p>
-
-        <p>We do not ask for your name, email address, phone number, contacts, photos, microphone, camera or precise location, and the game does not use them.</p>
+        <p>Withdrawing consent takes effect immediately for new processing. It does not undo what was already done lawfully before you withdrew.</p>
       </div>
 
       <div class="section">
-        <h2>2. HOW WE USE INFORMATION</h2>
+        <h2>7. Deleting your account</h2>
+        <p>You can delete your account in the app: Settings, then Delete account. You can also use <a href="delete-account.html">our deletion page</a>. Deletion works like this:</p>
         <ul>
-          <li>To run the game: create your guest account, match you with opponents, keep scores, rewards and leaderboards.</li>
-          <li>To prevent cheating and abuse and to keep the game fair and secure.</li>
-          <li>To measure and improve the game, and to fix bugs.</li>
-          <li>To show ads and give rewards for watching rewarded ads.</li>
-          <li>To respond to requests you send us.</li>
+          <li><strong>Immediately:</strong> your sessions end. The account can no longer be used to play, sign in or appear on boards.</li>
+          <li><strong>Within 30 days:</strong> your personal identifiers are removed. This includes your display name, username, avatar and cosmetics, and the link to your device.</li>
+          <li><strong>Analytics:</strong> your analytics profile is deleted from PostHog.</li>
+          <li><strong>Kept, but anonymised:</strong> your match results and coin ledger entries. We keep them so that other players' results and rewards stay correct. They no longer identify you.</li>
+          <li><strong>Reports:</strong> reports about a deleted account are kept anonymised for 90 days for abuse review, then deleted. Reports you sent are deleted.</li>
+          <li><strong>Backups:</strong> copies in backups expire on each provider's schedule, <span class="ph">[OWNER: confirm Supabase backup retention]</span>. If we restore a backup, we repeat any deletions that were requested after it was made.</li>
         </ul>
+        <p><strong>Inactive guest accounts:</strong> a guest account with no activity for 24 months goes through the same steps.</p>
       </div>
 
       <div class="section">
-        <h2>3. OPPONENTS AND BOTS</h2>
-        <p>If no other player is found quickly, the game may match you with a computer-controlled opponent. Bot opponents use a made-up name and are not real people. Bot matches work like normal matches.</p>
+        <h2>8. How long we keep data</h2>
+        <p>Retention of each item is shown in section 2. The table below shows how long each system keeps data.</p>
+
+        <table class="table">
+          <thead>
+            <tr><th>System</th><th>How long it is kept</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="System">Rate-limit counters (Redis Cloud)</td>
+              <td data-label="How long">About 60 seconds</td>
+            </tr>
+            <tr>
+              <td data-label="System">Live state (Redis Cloud)</td>
+              <td data-label="How long">Online status 45 seconds. Match assignment 5 minutes. Queue entries expire automatically.</td>
+            </tr>
+            <tr>
+              <td data-label="System">Analytics queue on your phone</td>
+              <td data-label="How long">Sent events are removed. Unsent events are kept, up to 2,000, until they are sent. All are removed when you uninstall.</td>
+            </tr>
+            <tr>
+              <td data-label="System">Game database (Supabase)</td>
+              <td data-label="How long">Until account deletion, then as described in section 7. Backups: <span class="ph">[OWNER: confirm Supabase backup retention]</span></td>
+            </tr>
+            <tr>
+              <td data-label="System">PostHog (US)</td>
+              <td data-label="How long"><span class="ph">[OWNER: confirm PostHog data and replay retention]</span></td>
+            </tr>
+            <tr>
+              <td data-label="System">Server logs (Render)</td>
+              <td data-label="How long"><span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+            <tr>
+              <td data-label="System">Ads (Google AdMob)</td>
+              <td data-label="How long"><span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+            <tr>
+              <td data-label="System">Website hosting logs (Vercel)</td>
+              <td data-label="How long"><span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+            <tr>
+              <td data-label="System">Support email</td>
+              <td data-label="How long"><span class="ph">[OWNER: confirm]</span></td>
+            </tr>
+            <tr>
+              <td data-label="System">Deletion requests made on the web</td>
+              <td data-label="How long">Contact details removed 30 days after the request is closed</td>
+            </tr>
+            <tr>
+              <td data-label="System">Inactive guest accounts</td>
+              <td data-label="How long">Anonymised after 24 months of no activity</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="section">
-        <h2>4. WHAT OTHER PLAYERS CAN SEE</h2>
-        <p>Your display name, rank and public match statistics can appear on leaderboards and in challenge links you share. We do not show your device identifier or any contact details.</p>
+        <h2>9. Your rights</h2>
+        <p>To use any of these rights, email <a href="mailto:sonubodat77@gmail.com">sonubodat77@gmail.com</a> from the address you can be reached at, and give your display name or username if you can. We reply within the time the law sets. You can also complain to your local data protection authority.</p>
+
+        <h3>EU, EEA and UK</h3>
+        <p>You can ask us for access to your data, correction, erasure, a copy of your data (portability), that we stop or restrict some processing, and that we stop processing based on our legitimate interests. You can withdraw consent at any time (section 6). You can complain to your supervisory authority, for example the Information Commissioner's Office in the UK, or the authority in your EU or EEA country.</p>
+
+        <h3>US states, including California</h3>
+        <p>Depending on your state, you can ask us to tell you what personal information we hold, to delete it, or to correct it. You can opt out of the "sale" or "sharing" of your personal information. Ad data collected through Google AdMob may count as "sharing" under California law. <span class="ph">[LEGAL REVIEW]</span> Where your browser sends the Global Privacy Control signal, we treat it as an opt-out request. <span class="ph">[OWNER: confirm Global Privacy Control handling]</span></p>
+
+        <h3>Brazil (LGPD)</h3>
+        <p>You can ask for confirmation of processing, access, correction, anonymisation or deletion of unnecessary data, portability, and information about sharing. You can withdraw consent at any time.</p>
+
+        <h3>Canada (PIPEDA)</h3>
+        <p>You can ask for access to your personal information and for corrections. You can withdraw consent, subject to legal or contractual limits. You can complain to the Office of the Privacy Commissioner of Canada.</p>
+
+        <h3>Australia</h3>
+        <p>You can ask for access to and correction of your personal information. You can complain to us first, and then to the Office of the Australian Information Commissioner.</p>
+
+        <h3>India (DPDP Act 2023)</h3>
+        <p>You can ask for a summary of your personal data, its correction or erasure, and the names of the parties we share it with. You can withdraw consent at any time, and you can complain to us first.</p>
       </div>
 
       <div class="section">
-        <h2>5. SHARING OF INFORMATION</h2>
-        <p>We do not sell your personal information. We share data only with:</p>
-        <ul>
-          <li>Service providers that host and run the game (hosting, database and caching providers).</li>
-          <li>Google AdMob, for advertising as described above.</li>
-          <li>Authorities or other parties when required by law, or to protect the rights, safety and security of players and the game.</li>
-        </ul>
+        <h2>10. Where your data goes</h2>
+        <p>Some of our providers process data outside your country. Each provider's region and transfer safeguards are listed below.</p>
+
+        <table class="table">
+          <thead>
+            <tr><th>Provider</th><th>What it does</th><th>Region and transfer safeguard</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Provider">PostHog</td>
+              <td data-label="What it does">Analytics and session replay</td>
+              <td data-label="Region">United States. Transfer safeguard: <span class="ph">[OWNER: confirm transfer mechanism]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Provider">Google (AdMob and UMP)</td>
+              <td data-label="What it does">Ads and consent form</td>
+              <td data-label="Region"><span class="ph">[OWNER: confirm region and transfer mechanism]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Provider">Supabase</td>
+              <td data-label="What it does">Database</td>
+              <td data-label="Region"><span class="ph">[OWNER: confirm region and transfer mechanism]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Provider">Render</td>
+              <td data-label="What it does">Game servers and logs</td>
+              <td data-label="Region"><span class="ph">[OWNER: confirm region and transfer mechanism]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Provider">Redis Cloud</td>
+              <td data-label="What it does">Live state and rate limits</td>
+              <td data-label="Region"><span class="ph">[OWNER: confirm region and transfer mechanism]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Provider">Vercel</td>
+              <td data-label="What it does">Website hosting</td>
+              <td data-label="Region"><span class="ph">[OWNER: confirm region and transfer mechanism]</span></td>
+            </tr>
+            <tr>
+              <td data-label="Provider">Email provider</td>
+              <td data-label="What it does">Support and privacy requests</td>
+              <td data-label="Region"><span class="ph">[OWNER: name provider, confirm region and transfer mechanism]</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="section">
-        <h2>6. DATA RETENTION</h2>
-        <p>Gameplay data is kept while your guest account is active. Logs and analytics events are kept for a limited time needed for security and improvement. You can ask us to delete your data at any time (see Section 8).</p>
+        <h2>11. Availability</h2>
+        <p>TapTap is not offered in mainland China.</p>
       </div>
 
       <div class="section">
-        <h2>7. CHILDREN</h2>
-        <p>The game is not directed at children under 13 (or the minimum age in your country), and we do not knowingly collect personal information from them. If you believe a child has provided data, contact us and we will delete it. Advertising shown in the game is general audience advertising.</p>
+        <h2>12. Security</h2>
+        <p>Data is sent over encrypted connections (HTTPS and WSS). Match results are checked on our servers. Sign-in tokens are stored as hashes. No system is completely secure, so we cannot promise absolute security.</p>
       </div>
 
       <div class="section">
-        <h2>8. YOUR CHOICES AND RIGHTS</h2>
-        <ul>
-          <li>You can change your display name in Settings.</li>
-          <li>You can reset your advertising ID or opt out of ad personalization in your phone settings (Android: Settings &gt; Google &gt; Ads; iOS: Settings &gt; Privacy &amp; Security &gt; Tracking / Apple Advertising).</li>
-          <li>You can ask us to access, correct or delete the data linked to your guest account by emailing sonubodat77@gmail.com with your display name and, if possible, your player ID. Depending on where you live (for example the EU/UK, or California), you may have additional rights such as objecting to or restricting processing. We will respond within a reasonable time.</li>
-          <li>Uninstalling the game removes the guest identifier from your phone; server-side data can be deleted on request.</li>
-        </ul>
+        <h2>13. Changes to this policy</h2>
+        <p>We will ask you to accept material changes to this policy in the app before they apply to you. The version and effective date at the top show the latest version.</p>
       </div>
 
       <div class="section">
-        <h2>9. SECURITY</h2>
-        <p>Data is sent over encrypted connections (HTTPS/WSS). Game results are validated on our servers. No method of storage or transmission is 100% secure, so we cannot guarantee absolute security.</p>
-      </div>
-
-      <div class="section">
-        <h2>10. INTERNATIONAL TRANSFERS</h2>
-        <p>Our service providers and Google may process data in countries other than yours. By using the game you understand your information may be transferred to and processed in those countries.</p>
-      </div>
-
-      <div class="section">
-        <h2>11. CHANGES TO THIS POLICY</h2>
-        <p>We may update this policy. The "Last updated" date shows the latest version. Continued use of the game after a change means you accept the updated policy.</p>
-      </div>
-
-      <div class="section">
-        <h2>12. CONTACT</h2>
+        <h2>14. Contact</h2>
         <p>Questions or requests: <a href="mailto:sonubodat77@gmail.com">sonubodat77@gmail.com</a></p>
       </div>
+
+      <footer class="site-footer" aria-label="Site links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="delete-account.html">Delete account</a>
+        <a href="children.html">Children</a>
+        <a href="support.html">Support</a>
+      </footer>
     </div>
   </div>
 </body>
