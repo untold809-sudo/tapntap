@@ -7,44 +7,48 @@
 	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https: http://127.0.0.1:* http://localhost:*; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
 	<title>TapTap Admin</title>
 	<style>
-		:root { color: #eef2ff; background: #08090f; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+		:root { --ink: #0a0a12; --muted: #5b6070; --line: #e3e5ee; --cloud: #f7f7fb; --blue: #005cee; --red: #ff1238; --green: #137a43;
+			color: var(--ink); background: #fff; font-family: Poppins, system-ui, -apple-system, "Segoe UI", sans-serif; color-scheme: light; }
 		* { box-sizing: border-box; }
-		body { margin: 0; min-height: 100vh; background: radial-gradient(circle at 80% 0%, #3867ff55, transparent 32rem), radial-gradient(circle at 0% 95%, #3ef3ff33, transparent 28rem), #08090f; }
-		main { width: min(100%, 960px); margin: 0 auto; padding: 32px 16px 64px; }
-		header { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
-		h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1; }
-		h2 { margin: 0 0 4px; font-size: 1.2rem; }
-		p, .muted { margin: 6px 0 0; color: #98a2b3; }
-		.panel { background: #11131dcc; border: 1px solid #ffffff14; border-radius: 18px; box-shadow: 0 24px 80px #00000055; padding: 22px; margin-bottom: 18px; }
+		body { margin: 0; min-height: 100vh; background: var(--cloud); border-top: 6px solid; border-image: linear-gradient(90deg, var(--blue) 50%, var(--red) 50%) 1; }
+		main { width: min(100%, 960px); margin: 0 auto; padding: 24px 16px 64px; }
+		header { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+		h1 { margin: 0; font-size: 1.6rem; font-weight: 800; }
+		h2 { margin: 0 0 4px; font-size: 1.1rem; }
+		h3 { margin: 22px 0 0; font-size: .95rem; }
+		p, .muted { margin: 6px 0 0; color: var(--muted); }
+		.panel { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 22px; margin-bottom: 18px; }
 		.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 14px; }
-		label { display: grid; gap: 7px; color: #cbd5e1; font-size: .8rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
-		input, textarea, select { width: 100%; border: 1px solid #ffffff1f; border-radius: 12px; background: #08090f; color: #f8fafc; font: inherit; padding: 12px 14px; outline: none; }
-		textarea { min-height: 220px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; }
-		input:focus, textarea:focus, select:focus { border-color: #63e6ff; box-shadow: 0 0 0 3px #63e6ff22; }
+		label { display: grid; gap: 6px; color: var(--ink); font-size: .85rem; font-weight: 600; }
+		input, textarea, select { width: 100%; border: 1px solid #cbd0de; border-radius: 8px; background: #fff; color: var(--ink); font: inherit; font-weight: 400; padding: 10px 12px; }
+		textarea { min-height: 200px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85rem; }
+		input[readonly] { background: var(--cloud); }
+		input:focus, textarea:focus, select:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
 		.full { grid-column: 1 / -1; }
-		.switch { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px; border: 1px solid #ffffff14; border-radius: 14px; background: #ffffff08; text-transform: none; letter-spacing: 0; font-size: .95rem; }
-		.switch input { width: 22px; height: 22px; accent-color: #b8f24a; }
+		.switch { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; }
+		.switch input { width: 20px; height: 20px; accent-color: var(--blue); }
 		.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-		button { border: 0; border-radius: 14px; padding: 12px 18px; background: #b8f24a; color: #050607; font: inherit; font-weight: 900; cursor: pointer; }
-		button.secondary { background: #ffffff12; color: #f8fafc; border: 1px solid #ffffff1f; }
-		button.danger { background: #ff8c8c22; color: #ffb4b4; border: 1px solid #ff8c8c55; }
+		button { border: 1px solid var(--blue); border-radius: 8px; padding: 10px 16px; background: var(--blue); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+		button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+		button.secondary { background: #fff; color: var(--blue); border-color: #cbd0de; }
+		button.danger { background: #fff; color: #c4002a; border-color: var(--red); }
 		button:disabled { opacity: .5; cursor: wait; }
-		.tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
-		.tabs button { background: #ffffff0d; color: #cbd5e1; border: 1px solid #ffffff14; }
-		.tabs button[aria-selected="true"] { background: #b8f24a; color: #050607; }
-		.status { margin-top: 14px; min-height: 22px; color: #98a2b3; font-weight: 700; }
-		.status.error { color: #ff8c8c; } .status.success { color: #b8f24a; }
+		.tabs { display: flex; gap: 4px; margin-bottom: 16px; flex-wrap: wrap; position: sticky; top: 0; background: var(--cloud); padding: 8px 0; border-bottom: 1px solid var(--line); z-index: 1; }
+		.tabs button { background: transparent; color: var(--muted); border-color: transparent; }
+		.tabs button[aria-selected="true"] { background: var(--blue); border-color: var(--blue); color: #fff; }
+		.status { margin-top: 14px; min-height: 22px; color: var(--muted); font-weight: 600; }
+		.status.error { color: #c4002a; } .status.success { color: var(--green); }
 		.login { max-width: 420px; margin: 8vh auto 0; }
-		.pill { font-size: .8rem; color: #98a2b3; border: 1px solid #ffffff1f; border-radius: 999px; padding: 6px 12px; }
-		.hint { font-size: .85rem; color: #98a2b3; text-transform: none; letter-spacing: 0; font-weight: 500; }
-		.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 14px; }
-		.card { background: #ffffff08; border: 1px solid #ffffff14; border-radius: 14px; padding: 14px; }
-		.card b { display: block; font-size: 1.35rem; margin-top: 6px; overflow-wrap: anywhere; }
+		.pill { font-size: .8rem; color: var(--muted); border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 6px 12px; overflow-wrap: anywhere; }
+		.hint { font-size: .8rem; color: var(--muted); font-weight: 400; }
+		.warn { border-left: 4px solid var(--red); background: #fff5f6; padding: 10px 12px; margin-top: 10px; font-size: .85rem; }
+		.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 14px; }
+		.card { border: 1px solid var(--line); border-radius: 8px; padding: 12px; color: var(--muted); font-size: .85rem; }
+		.card b { display: block; color: var(--ink); font-size: 1.25rem; margin-top: 4px; overflow-wrap: anywhere; }
 		.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-		.chips button { padding: 7px 12px; font-size: .85rem; }
-		.campaign { border-top: 1px solid #ffffff14; padding: 12px 0; font-size: .9rem; overflow-wrap: anywhere; }
-		.campaign progress { width: 100%; height: 8px; accent-color: #b8f24a; margin-top: 6px; }
-		.tabs { position: sticky; top: 0; background: #08090fee; padding: 8px 0; z-index: 1; }
+		.chips button { padding: 6px 12px; font-size: .85rem; }
+		.campaign { border-top: 1px solid var(--line); padding: 12px 0; font-size: .9rem; overflow-wrap: anywhere; }
+		.campaign progress { width: 100%; height: 8px; accent-color: var(--blue); margin-top: 6px; }
 		[hidden] { display: none !important; }
 		@media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
 	</style>
@@ -123,11 +127,24 @@
 			<div class="grid">
 				<label class="switch"><span>Send analytics through the backend<br><span class="hint">analytics_relay. Server needs POSTHOG_SERVER_KEY.</span></span><input id="cfgRelay" type="checkbox"></label>
 				<label>Events to silence (comma list)<input id="cfgDrop" placeholder="gameplay_tap,tap_heatmap"></label>
+				<div class="full">
+					<h3>App addresses</h3>
+					<p class="hint">Leave empty to use the address built into the app. The app picks up a change at its next config check, then uses it from the following launch.</p>
+					<div class="warn">Keep the old server running until every player has checked in (at least the refresh interval). Only https and these hosts are accepted: <b>*.sonu77bodat.workers.dev</b>, <b>tapntap.dpdns.org</b>, <b>tapntap.com</b>. Another domain needs one app release.</div>
+				</div>
+				<label class="full">Backend URL<input data-key="api_base_url" placeholder="https://tapntap-api.sonu77bodat.workers.dev"></label>
+				<label>Content folder URL<input data-key="content_base_url" placeholder="https://tapntap.dpdns.org/content/"></label>
+				<label>Share link<input data-key="share_url" placeholder="https://tapntap.com"></label>
+				<label>Privacy policy URL<input data-key="privacy_url" placeholder="https://tapntap.dpdns.org/privacy.html"></label>
+				<label>Terms URL<input data-key="terms_url" placeholder="https://tapntap.dpdns.org/terms.html"></label>
+				<label>Delete account URL<input data-key="delete_account_url" placeholder="https://tapntap.dpdns.org/delete-account.html"></label>
+				<label>PostHog host<input data-key="posthog_host" placeholder="https://us.i.posthog.com"></label>
+				<label class="full">PostHog project key (public, starts with phc_)<input data-key="posthog_api_key" placeholder="phc_..."></label>
 				<label class="full">Values (JSON object)
 					<textarea id="configValues" spellcheck="false">{}</textarea>
 					<span class="hint">Example: {"showShop": false, "eventBanner": "Weekend x2 coins!"}</span>
 				</label>
-				<label>Refresh interval (days)<input id="configTtlDays" type="number" min="0.05" max="30" step="0.5" value="5"></label>
+				<label>Refresh interval (days)<input id="configTtlDays" type="number" min="0.05" max="30" step="0.5" value="15"></label>
 				<label>Last saved<input id="configUpdatedAt" readonly></label>
 			</div>
 			<div class="actions">
@@ -298,7 +315,7 @@
 	// ---------- remote config ----------
 	function fillConfig(d) {
 		$('configValues').value = JSON.stringify(d.values ?? {}, null, 2);
-		$('configTtlDays').value = String(Math.round(((d.ttlSeconds ?? 432000) / 86400) * 100) / 100);
+		$('configTtlDays').value = String(Math.round(((d.ttlSeconds ?? 1296000) / 86400) * 100) / 100);
 		$('configUpdatedAt').value = d.updatedAt ? new Date(d.updatedAt).toLocaleString() : '';
 		syncKnownKeys();
 	}
@@ -308,6 +325,18 @@
 		try { v = parseValues(); } catch { return; }
 		$('cfgRelay').checked = v.analytics_relay === true;
 		$('cfgDrop').value = typeof v.analytics_drop_events === 'string' ? v.analytics_drop_events : '';
+		for (const el of document.querySelectorAll('[data-key]')) el.value = typeof v[el.dataset.key] === 'string' ? v[el.dataset.key] : '';
+	}
+	// Same rules as the app (url_overrides.dart); the app ignores anything else.
+	function addressProblem(key, value) {
+		if (key === 'posthog_api_key') return /^phc_[A-Za-z0-9]{20,80}$/.test(value) ? '' : 'must start with phc_';
+		let u;
+		try { u = new URL(value); } catch { return 'is not a URL'; }
+		if (u.protocol !== 'https:' || u.username || u.port) return 'must be a plain https URL';
+		const host = u.hostname;
+		const ok = key === 'posthog_host' ? host.endsWith('.posthog.com')
+			: host.endsWith('.sonu77bodat.workers.dev') || host === 'tapntap.dpdns.org' || host === 'tapntap.com';
+		return ok ? '' : 'uses a host the app does not trust';
 	}
 	function writeKnownKey(key, value) {
 		try {
@@ -320,6 +349,9 @@
 	$('cfgRelay').addEventListener('change', () => writeKnownKey('analytics_relay', $('cfgRelay').checked));
 	$('cfgDrop').addEventListener('change', () => writeKnownKey('analytics_drop_events', $('cfgDrop').value.trim()));
 	$('configValues').addEventListener('change', syncKnownKeys);
+	for (const el of document.querySelectorAll('[data-key]')) {
+		el.addEventListener('change', () => writeKnownKey(el.dataset.key, el.value.trim()));
+	}
 	function parseValues() {
 		let values;
 		try { values = JSON.parse($('configValues').value || '{}'); } catch (e) { throw new Error(`Invalid JSON: ${e.message}`); }
@@ -339,6 +371,16 @@
 	$('configSave').addEventListener('click', withBusy(configButtons, async () => {
 		try {
 			const values = parseValues();
+			for (const el of document.querySelectorAll('[data-key]')) {
+				const value = values[el.dataset.key];
+				const problem = value === undefined ? '' : addressProblem(el.dataset.key, String(value));
+				if (problem) throw new Error(`${el.dataset.key} ${problem}.`);
+			}
+			if (values.api_base_url) {
+				const ok = await fetch(`${values.api_base_url.replace(/\/+$/, '')}/api/health`).then((r) => r.ok).catch(() => false);
+				if (!ok) throw new Error('The new Backend URL does not answer /api/health. Not saved.');
+				if (!confirm(`Move every player to ${values.api_base_url}?`)) return;
+			}
 			const days = Number($('configTtlDays').value);
 			const ttlSeconds = Math.round(days * 86400);
 			if (!Number.isFinite(days) || ttlSeconds < 3600 || ttlSeconds > 2592000) throw new Error('Refresh interval must be between 1 hour (0.05 days) and 30 days.');
