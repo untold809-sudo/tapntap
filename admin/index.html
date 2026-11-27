@@ -37,6 +37,14 @@
 		.login { max-width: 420px; margin: 8vh auto 0; }
 		.pill { font-size: .8rem; color: #98a2b3; border: 1px solid #ffffff1f; border-radius: 999px; padding: 6px 12px; }
 		.hint { font-size: .85rem; color: #98a2b3; text-transform: none; letter-spacing: 0; font-weight: 500; }
+		.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 14px; }
+		.card { background: #ffffff08; border: 1px solid #ffffff14; border-radius: 14px; padding: 14px; }
+		.card b { display: block; font-size: 1.35rem; margin-top: 6px; overflow-wrap: anywhere; }
+		.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+		.chips button { padding: 7px 12px; font-size: .85rem; }
+		.campaign { border-top: 1px solid #ffffff14; padding: 12px 0; font-size: .9rem; overflow-wrap: anywhere; }
+		.campaign progress { width: 100%; height: 8px; accent-color: #b8f24a; margin-top: 6px; }
+		.tabs { position: sticky; top: 0; background: #08090fee; padding: 8px 0; z-index: 1; }
 		[hidden] { display: none !important; }
 		@media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
 	</style>
@@ -51,7 +59,7 @@
 			<label class="full">Username<input id="username" autocomplete="username" required></label>
 			<label class="full">Password<input id="password" type="password" autocomplete="current-password" required></label>
 			<details class="full"><summary class="muted">Server</summary>
-				<label style="margin-top:10px">Backend URL<input id="backendUrl" autocomplete="url" value="https://tapntap-1.onrender.com"></label>
+				<label style="margin-top:10px">Backend URL<input id="backendUrl" autocomplete="url" value="https://tapntap-api.sonu77bodat.workers.dev"></label>
 			</details>
 			<div class="actions full"><button id="loginButton" type="submit">Sign in</button></div>
 		</form>
@@ -66,13 +74,28 @@
 		</header>
 
 		<div class="tabs" role="tablist">
-			<button role="tab" aria-selected="true" data-tab="updateTab" type="button">Force update</button>
+			<button role="tab" aria-selected="true" data-tab="homeTab" type="button">Overview</button>
+			<button role="tab" aria-selected="false" data-tab="updateTab" type="button">Force update</button>
 			<button role="tab" aria-selected="false" data-tab="configTab" type="button">Remote config</button>
 			<button role="tab" aria-selected="false" data-tab="grantTab" type="button">Grants</button>
 		</div>
 
+		<!-- OVERVIEW -->
+		<section id="homeTab" class="panel" role="tabpanel" aria-label="Overview">
+			<h2>Overview</h2>
+			<div class="cards">
+				<div class="card">Server<b id="ovHealth">...</b></div>
+				<div class="card">Response time<b id="ovLatency">...</b></div>
+				<div class="card">Force update<b id="ovUpdate">...</b></div>
+				<div class="card">Remote config keys<b id="ovConfig">...</b></div>
+				<div class="card">Grant campaigns<b id="ovGrants">...</b></div>
+			</div>
+			<div class="actions"><button id="ovRefresh" type="button">Refresh</button></div>
+			<div id="ovStatus" class="status" role="status" aria-live="polite"></div>
+		</section>
+
 		<!-- FORCE UPDATE -->
-		<section id="updateTab" class="panel" role="tabpanel" aria-label="Force update">
+		<section id="updateTab" class="panel" role="tabpanel" aria-label="Force update" hidden>
 			<h2>Force update</h2>
 			<p>Checked by the app on every launch. Old versions below the minimum are blocked when "Force" is on.</p>
 			<div class="grid">
@@ -98,6 +121,8 @@
 			<h2>Remote config</h2>
 			<p>A JSON object the app downloads at most once per refresh interval and caches. Use simple keys: <code>true/false</code>, numbers, text.</p>
 			<div class="grid">
+				<label class="switch"><span>Send analytics through the backend<br><span class="hint">analytics_relay. Server needs POSTHOG_SERVER_KEY.</span></span><input id="cfgRelay" type="checkbox"></label>
+				<label>Events to silence (comma list)<input id="cfgDrop" placeholder="gameplay_tap,tap_heatmap"></label>
 				<label class="full">Values (JSON object)
 					<textarea id="configValues" spellcheck="false">{}</textarea>
 					<span class="hint">Example: {"showShop": false, "eventBanner": "Weekend x2 coins!"}</span>
@@ -116,6 +141,12 @@
 		<section id="grantTab" class="panel" role="tabpanel" aria-label="Grants" hidden>
 			<h2>Grants</h2>
 			<p>Give free coins or power-ups. One player (uuid or username) or every active player. Re-sending the same campaign id never double-credits.</p>
+			<div class="chips" aria-label="Presets">
+				<button class="secondary" type="button" data-preset='{"id":"welcome","coins":600}'>600 coins</button>
+				<button class="secondary" type="button" data-preset='{"id":"sorry","coins":200}'>Sorry gift: 200 coins</button>
+				<button class="secondary" type="button" data-preset='{"id":"powerups","FREEZE":3,"FIRE":3,"DOUBLE_TAP":3,"SHIELD":3}'>3 of each power-up</button>
+				<button class="secondary" type="button" data-preset='{"id":"","coins":0}'>Clear</button>
+			</div>
 			<div class="grid">
 				<label>Target
 					<select id="grantTarget"><option value="all">Everyone (active players)</option><option value="player">One player</option></select>
@@ -135,7 +166,7 @@
 				<button id="grantSend" type="button">Send grant</button>
 			</div>
 			<div id="grantStatus" class="status" role="status" aria-live="polite"></div>
-			<pre id="grantList" style="white-space:pre-wrap;font-size:12px"></pre>
+			<div id="grantList" style="margin-top:12px"></div>
 		</section>
 	</div>
 </main>
@@ -181,10 +212,12 @@
 		try {
 			const data = await api('/api/v1/admin/app-update'); // verifies the credentials
 			sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+			try { localStorage.setItem('tapntap.admin.user', user); localStorage.setItem('tapntap.admin.url', url); } catch { /* storage blocked */ }
 			$('password').value = '';
 			showApp();
 			fillUpdate(data);
 			loadConfig();
+			loadOverview();
 		} catch (error) {
 			session = null;
 			setStatus($('loginStatus'), error.message === 'Not signed in' ? 'Wrong username or password.' : error.message, 'error');
@@ -213,6 +246,27 @@
 		document.querySelectorAll('[role="tab"]').forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
 		document.querySelectorAll('[role="tabpanel"]').forEach((p) => { p.hidden = p.id !== tab.dataset.tab; });
 	}));
+
+	// ---------- overview ----------
+	async function loadOverview() {
+		const started = performance.now();
+		try {
+			const health = await (await fetch(`${session.url}/api/health`)).json();
+			$('ovHealth').textContent = health.data?.status === 'ok' ? 'Online' : 'Problem';
+			$('ovLatency').textContent = `${Math.round(performance.now() - started)} ms`;
+		} catch { $('ovHealth').textContent = 'Unreachable'; $('ovLatency').textContent = '-'; }
+		const [update, config, grants] = await Promise.allSettled(['app-update', 'config', 'grants'].map((p) => api(`/api/v1/admin/${p}`)));
+		if (!session) return;
+		const u = update.value;
+		$('ovUpdate').textContent = !u ? '-' : !u.enabled ? 'Off' : `${u.force ? 'Forced' : 'Prompt'} below ${u.minSupportedVersion}`;
+		$('ovConfig').textContent = config.value ? String(Object.keys(config.value.values ?? {}).length) : '-';
+		const list = grants.value?.campaigns;
+		$('ovGrants').textContent = list ? `${list.length} (${list.filter((c) => c.state === 'running').length} running)` : '-';
+		const failed = [update, config, grants].find((r) => r.status === 'rejected');
+		setStatus($('ovStatus'), failed ? failed.reason.message : `Updated ${new Date().toLocaleTimeString()}`, failed ? 'error' : 'success');
+	}
+	$('ovRefresh').addEventListener('click', withBusy([$('ovRefresh')], loadOverview));
+	document.querySelector('[data-tab="homeTab"]').addEventListener('click', loadOverview);
 
 	// ---------- force update ----------
 	const updateFields = ['enabled', 'force', 'minSupportedVersion', 'latestVersion', 'title', 'message', 'updateUrl', 'updateUrlAndroid', 'updateUrlIos'];
@@ -246,7 +300,26 @@
 		$('configValues').value = JSON.stringify(d.values ?? {}, null, 2);
 		$('configTtlDays').value = String(Math.round(((d.ttlSeconds ?? 432000) / 86400) * 100) / 100);
 		$('configUpdatedAt').value = d.updatedAt ? new Date(d.updatedAt).toLocaleString() : '';
+		syncKnownKeys();
 	}
+	// The two keys the app reads get real controls; the JSON stays the source of truth.
+	function syncKnownKeys() {
+		let v;
+		try { v = parseValues(); } catch { return; }
+		$('cfgRelay').checked = v.analytics_relay === true;
+		$('cfgDrop').value = typeof v.analytics_drop_events === 'string' ? v.analytics_drop_events : '';
+	}
+	function writeKnownKey(key, value) {
+		try {
+			const v = parseValues();
+			if (value) v[key] = value; else delete v[key];
+			$('configValues').value = JSON.stringify(v, null, 2);
+			setStatus($('configStatus'), 'Changed. Press "Save remote config" to apply.');
+		} catch (e) { setStatus($('configStatus'), e.message, 'error'); syncKnownKeys(); }
+	}
+	$('cfgRelay').addEventListener('change', () => writeKnownKey('analytics_relay', $('cfgRelay').checked));
+	$('cfgDrop').addEventListener('change', () => writeKnownKey('analytics_drop_events', $('cfgDrop').value.trim()));
+	$('configValues').addEventListener('change', syncKnownKeys);
 	function parseValues() {
 		let values;
 		try { values = JSON.parse($('configValues').value || '{}'); } catch (e) { throw new Error(`Invalid JSON: ${e.message}`); }
@@ -286,7 +359,23 @@
 	async function loadGrants() {
 		try {
 			const d = await api('/api/v1/admin/grants');
-			$('grantList').textContent = d.campaigns.map((c) => `${c.campaignId}  ${c.state}  ${c.done}/${c.total}  failed ${c.failed}  coins ${c.coins} ${JSON.stringify(c.modifiers)}  ${c.createdAt}`).join('\n') || 'No campaigns yet.';
+			$('grantList').replaceChildren(...d.campaigns.map((c) => {
+				const row = document.createElement('div');
+				row.className = 'campaign';
+				const items = Object.entries(c.modifiers ?? {}).map(([k, n]) => `${n} ${k}`);
+				if (c.coins) items.unshift(`${c.coins} coins`);
+				const title = document.createElement('strong');
+				title.textContent = `${c.campaignId} · ${c.state}`;
+				const info = document.createElement('div');
+				info.className = 'muted';
+				info.textContent = `${items.join(', ')} · ${c.done}/${c.total} players · ${c.failed} failed · ${new Date(c.createdAt).toLocaleString()}`;
+				const bar = document.createElement('progress');
+				bar.max = c.total || 1;
+				bar.value = c.done;
+				row.append(title, info, bar);
+				return row;
+			}));
+			if (!d.campaigns.length) $('grantList').textContent = 'No campaigns yet.';
 			return d.campaigns.some((c) => c.state === 'running');
 		} catch (e) { setStatus($('grantStatus'), e.message, 'error'); return false; }
 	}
@@ -317,7 +406,21 @@
 	}));
 	document.querySelector('[data-tab="grantTab"]').addEventListener('click', loadGrants);
 
+	document.querySelectorAll('[data-preset]').forEach((chip) => chip.addEventListener('click', () => {
+		const p = JSON.parse(chip.dataset.preset);
+		$('grantCampaign').value = p.id ? `${p.id}-${new Date().toISOString().slice(0, 10)}` : '';
+		for (const k of ['FREEZE', 'FIRE', 'DOUBLE_TAP', 'SHIELD']) $('grant' + k).value = p[k] ?? 0;
+		$('grantCoins').value = p.coins ?? 0;
+		$('grantNote').value = '';
+		setStatus($('grantStatus'), p.id ? 'Preset filled. Check it, preview, then send.' : '');
+	}));
+
 	// ---------- boot ----------
+	// Only the server address and username are remembered; the password never is.
+	try {
+		$('username').value = localStorage.getItem('tapntap.admin.user') ?? '';
+		$('backendUrl').value = localStorage.getItem('tapntap.admin.url') || $('backendUrl').value;
+	} catch { /* storage blocked */ }
 	$('loginForm').addEventListener('submit', login);
 	$('logoutButton').addEventListener('click', () => logout());
 	try {
@@ -327,6 +430,7 @@
 			showApp();
 			api('/api/v1/admin/app-update').then(fillUpdate).catch(() => {});
 			loadConfig();
+			loadOverview();
 		}
 	} catch { sessionStorage.removeItem(SESSION_KEY); }
 </script>
